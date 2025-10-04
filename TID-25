@@ -1,0 +1,357 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>LinkNest — Linktree sederhana</title>
+  <meta name="description" content="Halaman link pribadi — LinkNest (static HTML)"/>
+  <style>
+    :root{
+      --accent:#7c3aed;
+      --bg:#f7f7fb;
+      --card:#fff;
+      --muted:#6b7280;
+      --radius:14px;
+    }
+    *{box-sizing:border-box}
+    body{margin:0;font-family:Inter,ui-sans-serif,system-ui,Segoe UI,Roboto,"Helvetica Neue",Arial;background:var(--bg);color:#0f172a}
+    .wrap{max-width:920px;margin:28px auto;padding:20px}
+    .grid{display:grid;grid-template-columns:1fr;gap:18px}
+    @media(min-width:900px){.grid{grid-template-columns:360px 1fr}}
+    .card{background:var(--card);border-radius:var(--radius);padding:18px;box-shadow:0 6px 20px rgba(12,15,30,0.06)}
+    .profile{display:flex;flex-direction:column;align-items:center;gap:12px;text-align:center}
+    .avatar{width:110px;height:110px;border-radius:999px;overflow:hidden;flex:0 0 110px;box-shadow:0 6px 18px rgba(12,15,30,0.08)}
+    .avatar img{width:100%;height:100%;object-fit:cover;display:block}
+    h1{margin:0;font-size:20px}
+    p.bio{margin:0;color:var(--muted);max-width:36ch}
+    .links{display:flex;flex-direction:column;gap:10px;margin-top:14px}
+    .link-btn{display:block;padding:12px;border-radius:12px;text-align:center;text-decoration:none;font-weight:600;border:1px solid var(--accent);color:var(--accent);background:#fff}
+    .small{font-size:13px;color:var(--muted)}
+    /* Editor */
+    label{display:block;font-size:13px;margin-bottom:6px;color:#111827}
+    input[type="text"], textarea, input[type="url"]{width:100%;padding:8px;border-radius:8px;border:1px solid #e6e9ef;background:#fff}
+    .row{display:flex;gap:8px}
+    .row > *{flex:1}
+    .btn{display:inline-block;padding:8px 10px;border-radius:8px;border:1px solid #e6e9ef;background:#fff;cursor:pointer}
+    .btn-primary{background:var(--accent);color:white;border-color:transparent}
+    .muted{color:var(--muted)}
+    .links-editor{max-height:260px;overflow:auto;margin-top:8px;padding-right:6px}
+    .link-item{border:1px dashed #eef2ff;padding:8px;border-radius:8px;margin-bottom:8px;display:flex;gap:8px;align-items:center}
+    .emoji{font-size:20px}
+    .flex{display:flex;gap:8px;align-items:center}
+    .space{height:8px}
+    footer{margin-top:12px;text-align:center;color:var(--muted);font-size:13px}
+    .tool-row{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+    .danger{background:#fff6f6;border:1px solid #ffdede;color:#a12b2b}
+    .code{font-family:monospace;background:#f1f5f9;padding:6px;border-radius:6px;font-size:13px}
+    .hint{font-size:13px;color:var(--muted)}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="grid">
+      <!-- Editor Column -->
+      <div class="card">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+          <strong>Editor</strong>
+          <small class="muted">Hasil disimpan otomatis di browser</small>
+        </div>
+
+        <label>Nama</label>
+        <input id="inp-name" type="text" placeholder="Nama kamu" />
+
+        <div class="space"></div>
+        <label>Bio (satu kalimat)</label>
+        <input id="inp-bio" type="text" placeholder="Saya seorang ..." />
+
+        <div class="space"></div>
+        <label>Avatar (URL)</label>
+        <input id="inp-avatar" type="url" placeholder="https://..." />
+
+        <div class="space"></div>
+        <label>Warna aksen</label>
+        <div class="row">
+          <input id="inp-accent" type="color" value="#7c3aed" style="width:72px;padding:4px" />
+          <input id="inp-accent-hex" type="text" placeholder="#7c3aed" style="max-width:120px" />
+        </div>
+
+        <div class="space"></div>
+        <div style="display:flex;justify-content:space-between;align-items:center">
+          <strong>Links</strong>
+          <button id="btn-add-link" class="btn">Tambah</button>
+        </div>
+
+        <div class="links-editor" id="links-editor"></div>
+
+        <div class="tool-row" style="margin-top:12px">
+          <button id="btn-export" class="btn">Download JSON</button>
+          <button id="btn-import-open" class="btn">Import JSON</button>
+          <button id="btn-share" class="btn btn-primary">Generate Share URL</button>
+          <button id="btn-clear" class="btn danger">Clear LocalStorage</button>
+        </div>
+
+        <div id="import-area" style="display:none;margin-top:10px">
+          <label>Paste JSON di sini</label>
+          <textarea id="import-text" style="width:100%;height:96px"></textarea>
+          <div style="display:flex;gap:8px;margin-top:8px">
+            <button id="btn-do-import" class="btn btn-primary">Import</button>
+            <button id="btn-cancel-import" class="btn">Batal</button>
+          </div>
+        </div>
+
+        <div style="margin-top:12px" class="hint">
+          Tips: klik <strong>Generate Share URL</strong> untuk membuat link yang dapat dibagikan (konfigurasi disimpan pada URL).
+        </div>
+      </div>
+
+      <!-- Preview Column -->
+      <div>
+        <div class="card profile" id="preview-card">
+          <div class="avatar"><img id="avatar-img" src="https://placehold.co/200x200?text=Avatar" alt="avatar" /></div>
+          <h1 id="preview-name">Nama Kamu</h1>
+          <p class="bio" id="preview-bio">Satu kalimat yang menjelaskan kamu.</p>
+
+          <div class="links" id="preview-links"></div>
+
+          <div style="margin-top:14px" class="small">Made with LinkNest • Static HTML</div>
+        </div>
+
+        <div style="height:16px"></div>
+
+        <div class="card">
+          <strong>Preview Tips</strong>
+          <ul style="margin:8px 0 0 18px;color:var(--muted)">
+            <li>Gunakan avatar 400×400 untuk hasil terbaik.</li>
+            <li>Bagikan URL hasil <span class="code">Generate Share URL</span>.</li>
+            <li>Jika ingin live di GitHub Pages, upload file <span class="code">index.html</span> ke root repo.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <footer>Instruksi: Upload file <code>index.html</code> ke repositori GitHub (root). Kemudian buka <code>https://username.github.io/repo/</code></footer>
+  </div>
+
+<script>
+/* Simple LinkNest single-file logic (no frameworks) */
+(function(){
+  const STORAGE_KEY = 'linknest_html_v1';
+
+  // default
+  const DEFAULT = {
+    profile: {
+      name: 'Nama Kamu',
+      bio: 'Satu kalimat yang menjelaskan kamu.',
+      avatar: 'https://placehold.co/200x200?text=Avatar'
+    },
+    accent: '#7c3aed',
+    links: [
+      { id: 'l1', title:'Website', url:'https://example.com', emoji:'🌐' },
+      { id: 'l2', title:'Instagram', url:'https://instagram.com', emoji:'📸' }
+    ]
+  };
+
+  // DOM
+  const inpName = document.getElementById('inp-name');
+  const inpBio = document.getElementById('inp-bio');
+  const inpAvatar = document.getElementById('inp-avatar');
+  const inpAccent = document.getElementById('inp-accent');
+  const inpAccentHex = document.getElementById('inp-accent-hex');
+  const previewName = document.getElementById('preview-name');
+  const previewBio = document.getElementById('preview-bio');
+  const avatarImg = document.getElementById('avatar-img');
+  const previewLinks = document.getElementById('preview-links');
+  const linksEditor = document.getElementById('links-editor');
+  const btnAdd = document.getElementById('btn-add-link');
+  const btnExport = document.getElementById('btn-export');
+  const btnImportOpen = document.getElementById('btn-import-open');
+  const importArea = document.getElementById('import-area');
+  const importText = document.getElementById('import-text');
+  const btnDoImport = document.getElementById('btn-do-import');
+  const btnCancelImport = document.getElementById('btn-cancel-import');
+  const btnShare = document.getElementById('btn-share');
+  const btnClear = document.getElementById('btn-clear');
+
+  // load from hash or localStorage
+  function decodeHash(h){
+    try{
+      if(!h) return null;
+      const s = decodeURIComponent(atob(h));
+      return JSON.parse(s);
+    }catch(e){ return null; }
+  }
+  function encodeHash(cfg){
+    try{
+      return btoa(encodeURIComponent(JSON.stringify(cfg)));
+    }catch(e){ return ''; }
+  }
+
+  function load(){
+    const hash = (location.hash || '').replace(/^#/, '');
+    if(hash){
+      const parsed = decodeHash(hash);
+      if(parsed) return parsed;
+    }
+    try{
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if(raw) return JSON.parse(raw);
+    }catch(e){}
+    return DEFAULT;
+  }
+
+  let cfg = load();
+
+  function save(){
+    try{ localStorage.setItem(STORAGE_KEY, JSON.stringify(cfg)); }catch(e){}
+    render();
+  }
+
+  function uid(){ return Math.random().toString(36).slice(2,9); }
+
+  // Render preview and editors
+  function render(){
+    // set accent
+    document.documentElement.style.setProperty('--accent', cfg.accent || DEFAULT.accent);
+    // profile
+    inpName.value = cfg.profile.name || '';
+    inpBio.value = cfg.profile.bio || '';
+    inpAvatar.value = cfg.profile.avatar || '';
+    inpAccent.value = cfg.accent || '#7c3aed';
+    inpAccentHex.value = cfg.accent || '#7c3aed';
+    previewName.textContent = cfg.profile.name;
+    previewBio.textContent = cfg.profile.bio;
+    avatarImg.src = cfg.profile.avatar;
+
+    // preview links
+    previewLinks.innerHTML = '';
+    cfg.links.forEach(l => {
+      const a = document.createElement('a');
+      a.className = 'link-btn';
+      a.href = l.url || '#';
+      a.target = '_blank';
+      a.rel = 'noreferrer';
+      a.innerHTML = (l.emoji?('<span class="emoji">'+escapeHtml(l.emoji)+'</span> '):'') + escapeHtml(l.title || l.url);
+      a.style.borderColor = cfg.accent;
+      a.style.color = cfg.accent;
+      previewLinks.appendChild(a);
+    });
+
+    // editor links
+    linksEditor.innerHTML = '';
+    cfg.links.forEach(l => {
+      const div = document.createElement('div');
+      div.className = 'link-item';
+      div.innerHTML = `
+        <div style="flex:1">
+          <div style="display:flex;gap:6px;align-items:center">
+            <input class="inp-e-title" data-id="${l.id}" type="text" value="${escapeAttr(l.title)}" placeholder="Judul" style="flex:1"/>
+            <input class="inp-e-emoji" data-id="${l.id}" type="text" value="${escapeAttr(l.emoji||'')}" placeholder="emoji" style="width:64px"/>
+          </div>
+          <input class="inp-e-url" data-id="${l.id}" type="url" value="${escapeAttr(l.url)}" placeholder="https://..." style="margin-top:6px"/>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:6px">
+          <button class="btn btn-primary btn-e-save" data-id="${l.id}" title="Simpan">✓</button>
+          <button class="btn btn-danger btn-e-del" data-id="${l.id}" style="background:#fff;border:1px solid #ffdede;color:#a12b2b">Hapus</button>
+        </div>
+      `;
+      linksEditor.appendChild(div);
+    });
+
+    // bind editor events
+    Array.from(document.querySelectorAll('.inp-e-title')).forEach(inp=>{
+      inp.oninput = e=> {
+        const id=e.target.dataset.id;
+        updateLink(id,{title:e.target.value});
+      }
+    });
+    Array.from(document.querySelectorAll('.inp-e-url')).forEach(inp=>{
+      inp.oninput = e=> {
+        const id=e.target.dataset.id;
+        updateLink(id,{url:e.target.value});
+      }
+    });
+    Array.from(document.querySelectorAll('.inp-e-emoji')).forEach(inp=>{
+      inp.oninput = e=> {
+        const id=e.target.dataset.id;
+        updateLink(id,{emoji:e.target.value});
+      }
+    });
+    Array.from(document.querySelectorAll('.btn-e-del')).forEach(b=>{
+      b.onclick = e=>{
+        const id=e.target.dataset.id;
+        removeLink(id);
+      }
+    });
+
+  }
+
+  // helper to escape
+  function escapeHtml(s){ if(!s) return ''; return s.replace(/[&<>"]/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
+  function escapeAttr(s){ return (s||'').replace(/"/g,'&quot;'); }
+
+  // update functions
+  function updateLink(id,patch){
+    cfg.links = cfg.links.map(l => l.id===id?({...l,...patch}):l);
+    save();
+  }
+  function addLink(){
+    const newL = { id: uid(), title:'Link Baru', url:'https://', emoji:'🔗' };
+    cfg.links.push(newL); save();
+    // scroll editor to bottom
+    setTimeout(()=> linksEditor.scrollTop = linksEditor.scrollHeight,50);
+  }
+  function removeLink(id){
+    if(!confirm('Hapus link ini?')) return;
+    cfg.links = cfg.links.filter(l=>l.id!==id); save();
+  }
+
+  // input bindings (profile)
+  inpName.oninput = e=> { cfg.profile.name = e.target.value; save(); }
+  inpBio.oninput = e=> { cfg.profile.bio = e.target.value; save(); }
+  inpAvatar.oninput = e=> { cfg.profile.avatar = e.target.value; save(); }
+  inpAccent.oninput = e=> { cfg.accent = e.target.value; inpAccentHex.value = e.target.value; save(); }
+  inpAccentHex.oninput = e=> { cfg.accent = e.target.value; inpAccent.value = e.target.value; save(); }
+
+  btnAdd.onclick = addLink;
+  btnExport.onclick = ()=>{
+    const data = JSON.stringify(cfg,null,2);
+    const blob = new Blob([data], {type:'application/json'});
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a'); a.href=url; a.download='linknest.json'; a.click();
+    URL.revokeObjectURL(url);
+  };
+  btnImportOpen.onclick = ()=> importArea.style.display = importArea.style.display==='none' ? 'block':'none';
+  btnCancelImport.onclick = ()=> { importArea.style.display='none'; importText.value=''; };
+  btnDoImport.onclick = ()=>{
+    try{
+      const parsed = JSON.parse(importText.value);
+      if(parsed && parsed.profile && parsed.links){ cfg = parsed; save(); importArea.style.display='none'; importText.value=''; alert('Import berhasil'); }
+      else alert('Format JSON tidak valid (harus memuat profile dan links)');
+    }catch(e){ alert('JSON tidak valid'); }
+  };
+
+  btnShare.onclick = ()=>{
+    const code = encodeHash(cfg);
+    const url = location.origin + location.pathname + '#' + code;
+    // try clipboard
+    if(navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(url).then(()=> alert('Share URL disalin ke clipboard!'));
+    } else {
+      prompt('Copy URL berikut:', url);
+    }
+  };
+
+  btnClear.onclick = ()=>{
+    if(!confirm('Hapus semua konfigurasi yang tersimpan di browser?')) return;
+    localStorage.removeItem(STORAGE_KEY);
+    cfg = JSON.parse(JSON.stringify(DEFAULT));
+    save();
+  };
+
+  // initial render
+  render();
+
+})();
+</script>
+</body>
+</html>

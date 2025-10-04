@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>LinkNest ⚡</title>
+  <title>LinkNest </title>
   <style>
     :root {
       --blue-light: #64b5f6;
@@ -14,24 +14,53 @@
       --text-dark: #f5f5f5;
     }
 
+    * {
+      box-sizing: border-box;
+    }
+
     body {
       font-family: "Poppins", sans-serif;
       margin: 0;
       padding: 0;
-      background: linear-gradient(180deg, var(--blue-light), var(--blue-dark));
+      background: radial-gradient(circle at center, var(--blue-light), var(--blue-dark));
       color: var(--text-light);
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: flex-start;
       min-height: 100vh;
-      transition: background 0.5s, color 0.5s;
-      overflow-x: hidden;
+      overflow: hidden;
+      transition: background 0.6s, color 0.6s;
+      animation: fadeIn 1.2s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
     .dark-mode {
-      background: linear-gradient(180deg, #001220, #003366);
+      background: radial-gradient(circle at center, #001220, #003366);
       color: var(--text-dark);
+    }
+
+    canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 0;
+    }
+
+    .content {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      animation: fadeUp 1.5s ease;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
     .avatar {
@@ -40,8 +69,8 @@
       border-radius: 50%;
       margin-top: 40px;
       border: 4px solid white;
-      box-shadow: 0 0 20px rgba(255,255,255,0.5);
-      animation: glow 3s infinite alternate;
+      box-shadow: 0 0 25px rgba(255,255,255,0.6);
+      animation: glow 3s infinite alternate, slideIn 1s ease;
     }
 
     @keyframes glow {
@@ -49,10 +78,15 @@
       to { box-shadow: 0 0 25px #2196f3; }
     }
 
+    @keyframes slideIn {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
     h1 {
       margin: 20px 0 5px;
       font-size: 1.8em;
-      text-shadow: 1px 1px 3px rgba(0,0,0,0.2);
+      text-shadow: 0 0 5px rgba(255,255,255,0.3);
     }
 
     p {
@@ -67,24 +101,27 @@
       width: 90%;
       max-width: 400px;
       gap: 15px;
+      animation: fadeUp 1.8s ease;
     }
 
     .link-btn {
-      background: rgba(255,255,255,0.2);
+      background: rgba(255,255,255,0.15);
       color: white;
-      border: none;
+      border: 1px solid rgba(255,255,255,0.3);
       padding: 15px;
       border-radius: 12px;
       font-size: 1.1em;
       text-align: center;
       cursor: pointer;
-      transition: transform 0.3s, background 0.3s;
+      text-decoration: none;
+      transition: all 0.3s ease;
       backdrop-filter: blur(8px);
     }
 
     .link-btn:hover {
-      background: rgba(255,255,255,0.4);
-      transform: translateY(-5px);
+      background: rgba(255,255,255,0.3);
+      transform: translateY(-4px);
+      box-shadow: 0 0 12px #00e5ff;
     }
 
     footer {
@@ -92,6 +129,7 @@
       bottom: 15px;
       text-align: center;
       color: white;
+      z-index: 3;
     }
 
     .toggle-theme {
@@ -110,22 +148,6 @@
       transform: rotate(20deg);
     }
 
-    /* Petir */
-    .lightning {
-      position: absolute;
-      top: -100px;
-      width: 2px;
-      height: 100px;
-      background: linear-gradient(white, transparent);
-      opacity: 0.5;
-      animation: lightning 4s infinite;
-    }
-
-    @keyframes lightning {
-      0%, 90%, 100% { opacity: 0; transform: translateY(-100px); }
-      95% { opacity: 1; transform: translateY(300px); }
-    }
-
     @media (max-width: 600px) {
       h1 { font-size: 1.5em; }
       .link-btn { font-size: 1em; padding: 12px; }
@@ -133,16 +155,19 @@
   </style>
 </head>
 <body>
-  <div class="lightning"></div>
-  <img src="https://i.imgur.com/h7DRznt.jpeg" alt="Foto Saya" class="avatar">
-  <h1>@djournalti</h1>
-  <p>Halo 👋 Selamat datang di LinkNest saya</p>
+  <canvas id="techCanvas"></canvas>
 
-  <div class="links">
-    <a class="link-btn" href="https://instagram.com/" target="_blank">📸 Instagram</a>
-    <a class="link-btn" href="https://youtube.com/" target="_blank">🎥 YouTube</a>
-    <a class="link-btn" href="https://github.com/djournalti" target="_blank">💻 GitHub</a>
-    <a class="link-btn" href="https://t.me/" target="_blank">💬 Telegram</a>
+  <div class="content">
+    <img src="https://i.imgur.com/h7DRznt.jpeg" alt="Foto Saya" class="avatar">
+    <h1>@djournal.ti</h1>
+    <p>⚡ Halo! Selamat datang</p>
+
+    <div class="links">
+      <a class="link-btn" href="https://www.instagram.com/djournal.ti?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank">📸 Instagram</a>
+      <a class="link-btn" href="https://youtube.com/" target="_blank">🎥 YouTube</a>
+      <a class="link-btn" href="https://github.com/djournalti" target="_blank">💻 GitHub</a>
+      <a class="link-btn" href="https://t.me/" target="_blank">💬 Telegram</a>
+    </div>
   </div>
 
   <footer>
@@ -150,19 +175,67 @@
   </footer>
 
   <script>
+    // 🌙 Toggle mode
     const body = document.body;
     function toggleTheme() {
       body.classList.toggle("dark-mode");
     }
 
-    // Animasi petir random
-    setInterval(() => {
-      const l = document.createElement("div");
-      l.className = "lightning";
-      l.style.left = Math.random() * window.innerWidth + "px";
-      document.body.appendChild(l);
-      setTimeout(() => l.remove(), 4000);
-    }, 5000);
+    // ⚙️ Animasi partikel teknologi
+    const canvas = document.getElementById("techCanvas");
+    const ctx = canvas.getContext("2d");
+    let particles = [];
+
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+    window.addEventListener("resize", resizeCanvas);
+    resizeCanvas();
+
+    class Particle {
+      constructor() {
+        this.x = Math.random() * canvas.width;
+        this.y = Math.random() * canvas.height;
+        this.size = Math.random() * 2 + 1;
+        this.speedX = Math.random() * 0.6 - 0.3;
+        this.speedY = Math.random() * 0.6 - 0.3;
+        this.alpha = Math.random() * 0.5 + 0.3;
+      }
+      update() {
+        this.x += this.speedX;
+        this.y += this.speedY;
+        if (this.x < 0 || this.x > canvas.width || this.y < 0 || this.y > canvas.height) {
+          this.x = Math.random() * canvas.width;
+          this.y = Math.random() * canvas.height;
+        }
+      }
+      draw() {
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(0, 229, 255, ${this.alpha})`;
+        ctx.fill();
+      }
+    }
+
+    function initParticles() {
+      particles = [];
+      for (let i = 0; i < 100; i++) {
+        particles.push(new Particle());
+      }
+    }
+
+    function animate() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      particles.forEach(p => {
+        p.update();
+        p.draw();
+      });
+      requestAnimationFrame(animate);
+    }
+
+    initParticles();
+    animate();
   </script>
 </body>
 </html>

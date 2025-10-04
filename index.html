@@ -1,37 +1,168 @@
-
 <!DOCTYPE html>
 <html lang="id">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>LinkNest</title>
-  <link rel="stylesheet" href="style.css" />
-  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
-  <script defer src="script.js"></script>
+  <title>LinkNest ⚡</title>
+  <style>
+    :root {
+      --blue-light: #64b5f6;
+      --blue-dark: #0d47a1;
+      --bg-light: #f0f4ff;
+      --bg-dark: #0a0a12;
+      --text-light: #222;
+      --text-dark: #f5f5f5;
+    }
+
+    body {
+      font-family: "Poppins", sans-serif;
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(180deg, var(--blue-light), var(--blue-dark));
+      color: var(--text-light);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      min-height: 100vh;
+      transition: background 0.5s, color 0.5s;
+      overflow-x: hidden;
+    }
+
+    .dark-mode {
+      background: linear-gradient(180deg, #001220, #003366);
+      color: var(--text-dark);
+    }
+
+    .avatar {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      margin-top: 40px;
+      border: 4px solid white;
+      box-shadow: 0 0 20px rgba(255,255,255,0.5);
+      animation: glow 3s infinite alternate;
+    }
+
+    @keyframes glow {
+      from { box-shadow: 0 0 10px #64b5f6; }
+      to { box-shadow: 0 0 25px #2196f3; }
+    }
+
+    h1 {
+      margin: 20px 0 5px;
+      font-size: 1.8em;
+      text-shadow: 1px 1px 3px rgba(0,0,0,0.2);
+    }
+
+    p {
+      margin: 0 0 25px;
+      font-size: 1em;
+      opacity: 0.9;
+    }
+
+    .links {
+      display: flex;
+      flex-direction: column;
+      width: 90%;
+      max-width: 400px;
+      gap: 15px;
+    }
+
+    .link-btn {
+      background: rgba(255,255,255,0.2);
+      color: white;
+      border: none;
+      padding: 15px;
+      border-radius: 12px;
+      font-size: 1.1em;
+      text-align: center;
+      cursor: pointer;
+      transition: transform 0.3s, background 0.3s;
+      backdrop-filter: blur(8px);
+    }
+
+    .link-btn:hover {
+      background: rgba(255,255,255,0.4);
+      transform: translateY(-5px);
+    }
+
+    footer {
+      position: fixed;
+      bottom: 15px;
+      text-align: center;
+      color: white;
+    }
+
+    .toggle-theme {
+      background: none;
+      border: 2px solid white;
+      border-radius: 50%;
+      padding: 10px;
+      font-size: 1.2em;
+      color: white;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .toggle-theme:hover {
+      background: rgba(255,255,255,0.2);
+      transform: rotate(20deg);
+    }
+
+    /* Petir */
+    .lightning {
+      position: absolute;
+      top: -100px;
+      width: 2px;
+      height: 100px;
+      background: linear-gradient(white, transparent);
+      opacity: 0.5;
+      animation: lightning 4s infinite;
+    }
+
+    @keyframes lightning {
+      0%, 90%, 100% { opacity: 0; transform: translateY(-100px); }
+      95% { opacity: 1; transform: translateY(300px); }
+    }
+
+    @media (max-width: 600px) {
+      h1 { font-size: 1.5em; }
+      .link-btn { font-size: 1em; padding: 12px; }
+    }
+  </style>
 </head>
 <body>
+  <div class="lightning"></div>
+  <img src="https://i.imgur.com/h7DRznt.jpeg" alt="Foto Saya" class="avatar">
+  <h1>@djournalti</h1>
+  <p>Halo 👋 Selamat datang di LinkNest saya</p>
 
-  <main>
-    <section class="profile">
-      <img src="https://i.imgur.com/h7DRznt.jpeg" alt="Foto Saya" class="avatar">
-      <h2>@djournal.ti</h2>
-      <p>Tentang kelas kita </p>
-    </section>
-
-    <section class="links">
-      <a href="https://www.instagram.com" class="link">📸 Instagram</a>
-      <a href="https://tiktok.com/@namaKamu" class="link">🎵 TikTok</a>
-      <a href="https://x.com" class="link">🐦 Twitter</a>
-      <a href="https://youtube.com" class="link">🎥 YouTube</a>
-    </section>
-  </main>
-  
-  <footer>
-  <button id="themeToggle">🌗 Mode</button>
-</footer>
+  <div class="links">
+    <a class="link-btn" href="https://instagram.com/" target="_blank">📸 Instagram</a>
+    <a class="link-btn" href="https://youtube.com/" target="_blank">🎥 YouTube</a>
+    <a class="link-btn" href="https://github.com/djournalti" target="_blank">💻 GitHub</a>
+    <a class="link-btn" href="https://t.me/" target="_blank">💬 Telegram</a>
+  </div>
 
   <footer>
-    <p>Made by TID-25</p>
+    <button class="toggle-theme" onclick="toggleTheme()">⚙️</button>
   </footer>
+
+  <script>
+    const body = document.body;
+    function toggleTheme() {
+      body.classList.toggle("dark-mode");
+    }
+
+    // Animasi petir random
+    setInterval(() => {
+      const l = document.createElement("div");
+      l.className = "lightning";
+      l.style.left = Math.random() * window.innerWidth + "px";
+      document.body.appendChild(l);
+      setTimeout(() => l.remove(), 4000);
+    }, 5000);
+  </script>
 </body>
 </html>

@@ -1,13 +1,3 @@
-// LinkNest — versi siap deploy otomatis di GitHub Pages dengan GitHub Actions
-// Petunjuk:
-// 1. Jalankan `npm create vite@latest linknest --template react`.
-// 2. Ganti isi `src/App.jsx` dengan file ini.
-// 3. Tambahkan Tailwind CSS sesuai panduan di https://tailwindcss.com/docs/guides/vite.
-// 4. Tambahkan dua file berikut:
-//    - `vite.config.js`
-//    - `.github/workflows/deploy.yml`
-// 5. Commit & push ke GitHub. Setelah push ke `main`, GitHub Pages akan otomatis membangun dan men-deploy.
-
 // vite.config.js
 /*
 import { defineConfig } from 'vite';

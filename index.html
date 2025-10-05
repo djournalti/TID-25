@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>LinkNest </title>
+  <title>LinkNest /title>
   <style>
     :root {
       --blue-light: #64b5f6;
@@ -13,10 +13,7 @@
       --text-light: #222;
       --text-dark: #f5f5f5;
     }
-
-    * {
-      box-sizing: border-box;
-    }
+    * { box-sizing: border-box; }
 
     body {
       font-family: "Poppins", sans-serif;
@@ -29,14 +26,8 @@
       align-items: center;
       justify-content: flex-start;
       min-height: 100vh;
-      overflow: hidden;
+      overflow-x: hidden;
       transition: background 0.6s, color 0.6s;
-      animation: fadeIn 1.2s ease;
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(30px); }
-      to { opacity: 1; transform: translateY(0); }
     }
 
     .dark-mode {
@@ -55,80 +46,80 @@
       position: relative;
       z-index: 2;
       text-align: center;
-      animation: fadeUp 1.5s ease;
-    }
-
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
+      padding-top: 60px;
+      width: 100%;
+      max-width: 800px;
     }
 
     .avatar {
       width: 120px;
       height: 120px;
       border-radius: 50%;
-      margin-top: 40px;
       border: 4px solid white;
       box-shadow: 0 0 25px rgba(255,255,255,0.6);
-      animation: glow 3s infinite alternate, slideIn 1s ease;
-    }
-
-    @keyframes glow {
-      from { box-shadow: 0 0 10px #64b5f6; }
-      to { box-shadow: 0 0 25px #2196f3; }
-    }
-
-    @keyframes slideIn {
-      from { opacity: 0; transform: translateY(-20px); }
-      to { opacity: 1; transform: translateY(0); }
+      margin-bottom: 10px;
     }
 
     h1 {
-      margin: 20px 0 5px;
+      margin: 10px 0 5px;
       font-size: 1.8em;
-      text-shadow: 0 0 5px rgba(255,255,255,0.3);
-    }
-
-    p {
-      margin: 0 0 25px;
-      font-size: 1em;
-      opacity: 0.9;
+      text-shadow: 0 0 10px rgba(255,255,255,0.3);
     }
 
     .links {
-      display: flex;
-      flex-direction: column;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 10px;
       width: 90%;
-      max-width: 400px;
-      gap: 15px;
-      animation: fadeUp 1.8s ease;
+      margin: 20px auto;
     }
 
     .link-btn {
       background: rgba(255,255,255,0.15);
       color: white;
       border: 1px solid rgba(255,255,255,0.3);
-      padding: 15px;
+      padding: 10px;
       border-radius: 12px;
-      font-size: 1.1em;
+      font-size: 0.95em;
       text-align: center;
-      cursor: pointer;
       text-decoration: none;
-      transition: all 0.3s ease;
+      transition: 0.3s;
       backdrop-filter: blur(8px);
     }
 
     .link-btn:hover {
       background: rgba(255,255,255,0.3);
-      transform: translateY(-4px);
+      transform: translateY(-3px);
       box-shadow: 0 0 12px #00e5ff;
+    }
+
+    .gallery {
+      margin-top: 40px;
+      width: 90%;
+      max-width: 800px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      gap: 12px;
+      z-index: 2;
+    }
+
+    .gallery img {
+      width: 100%;
+      border-radius: 10px;
+      transition: 0.3s;
+      cursor: pointer;
+      box-shadow: 0 0 8px rgba(0,229,255,0.5);
+    }
+
+    .gallery img:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 15px rgba(0,229,255,0.8);
     }
 
     footer {
       position: fixed;
       bottom: 15px;
       text-align: center;
-      color: white;
       z-index: 3;
     }
 
@@ -148,24 +139,81 @@
       transform: rotate(20deg);
     }
 
-    @media (max-width: 600px) {
-      h1 { font-size: 1.5em; }
-      .link-btn { font-size: 1em; padding: 12px; }
+    /* Popup image */
+    .popup {
+      position: fixed;
+      display: none;
+      justify-content: center;
+      align-items: center;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.8);
+      z-index: 10;
+    }
+    .popup img {
+      width: 80%;
+      max-width: 500px;
+      border-radius: 10px;
+      box-shadow: 0 0 20px #00e5ff;
     }
   </style>
 </head>
 <body>
   <canvas id="techCanvas"></canvas>
-
   <div class="content">
     <img src="https://i.imgur.com/h7DRznt.jpeg" alt="Foto Saya" class="avatar">
     <h1>@djournal.ti</h1>
-    <p>⚡ Halo! Selamat datang</p>
+    <p>⚡ Halo! Selamat datang di web TIF-D</p>
 
     <div class="links">
-      <a class="link-btn" href="https://www.instagram.com/djournal.ti?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank">📸 Instagram</a>
-      <a class="link-btn" href="https://youtube.com/" target="_blank">🎥 YouTube</a>
-      <a class="link-btn" href="https://t.me/" target="_blank">💬 Telegram</a>
+      <a class="link-btn" href="https://www.instagram.com/eevaaue_/" target="_blank">📸 eevaaue_</a>
+      <a class="link-btn" href="https://www.instagram.com/alwalidd.25/" target="_blank">📸 alwalidd.25</a>
+      <a class="link-btn" href="https://www.instagram.com/heyosmths/" target="_blank">📸 heyosmths</a>
+      <a class="link-btn" href="https://www.instagram.com/girvanagtg/" target="_blank">📸 girvanagtg</a>
+      <a class="link-btn" href="https://www.instagram.com/Kosta_ppp/" target="_blank">📸 Kosta_ppp</a>
+      <a class="link-btn" href="https://www.instagram.com/fadliakbar362/" target="_blank">📸 fadliakbar362</a>
+      <a class="link-btn" href="https://www.instagram.com/5w1h_517/" target="_blank">📸 5w1h_517</a>
+      <a class="link-btn" href="https://www.instagram.com/luk_lukmankhak23/" target="_blank">📸 luk_lukmankhak23</a>
+      <a class="link-btn" href="https://www.instagram.com/alfazkar2212/" target="_blank">📸 alfazkar2212</a>
+      <a class="link-btn" href="https://www.instagram.com/_firndaa/" target="_blank">📸 _firndaa</a>
+      <a class="link-btn" href="https://www.instagram.com/maelatulw/" target="_blank">📸 maelatulw</a>
+      <a class="link-btn" href="https://www.instagram.com/nation.fajar/" target="_blank">📸 nation.fajar</a>
+      <a class="link-btn" href="https://www.instagram.com/rhmiinblaa_/" target="_blank">📸 rhmiinblaa_</a>
+      <a class="link-btn" href="https://www.instagram.com/fadilsdhmandi_/" target="_blank">📸 fadilsdhmandi_</a>
+      <a class="link-btn" href="https://www.instagram.com/rifza_mhda/" target="_blank">📸 rifza_mhda</a>
+      <a class="link-btn" href="https://www.instagram.com/ilham_suf07/" target="_blank">📸 ilham_suf07</a>
+      <a class="link-btn" href="https://www.instagram.com/faizmaulana.h/" target="_blank">📸 faizmaulana.h</a>
+      <a class="link-btn" href="https://www.instagram.com/t.lithanrl/" target="_blank">📸 t.lithanrl</a>
+      <a class="link-btn" href="https://www.instagram.com/fq.bilaa/" target="_blank">📸 fq.bilaa</a>
+      <a class="link-btn" href="https://www.instagram.com/artheyaelf/" target="_blank">📸 artheyaelf</a>
+      <a class="link-btn" href="https://www.instagram.com/knlls_06/" target="_blank">📸 knlls_06</a>
+      <a class="link-btn" href="https://www.instagram.com/haikalkhabibiee/" target="_blank">📸 haikalkhabibiee</a>
+      <a class="link-btn" href="https://www.instagram.com/uvwndii._/" target="_blank">📸 uvwndii._</a>
+      <a class="link-btn" href="https://www.instagram.com/raemzs/" target="_blank">📸 raemzs</a>
+      <a class="link-btn" href="https://www.instagram.com/nafis.ainul/" target="_blank">📸 nafis.ainul</a>
+      <a class="link-btn" href="https://www.instagram.com/vikadwindaa/" target="_blank">📸 vikadwindaa</a>
+      <a class="link-btn" href="https://www.instagram.com/4rraabb/" target="_blank">📸 4rraabb</a>
+      <a class="link-btn" href="https://www.instagram.com/danweee/" target="_blank">📸 danweee</a>
+      <a class="link-btn" href="https://www.instagram.com/riky_aja01/" target="_blank">📸 riky_aja01</a>
+      <a class="link-btn" href="https://www.instagram.com/aruuladzim/" target="_blank">📸 aruuladzim</a>
+      <a class="link-btn" href="https://www.instagram.com/attilla_mardhotillah_ar_rofiq/" target="_blank">📸 attilla_mardhotillah_ar_rofiq</a>
+      <a class="link-btn" href="https://www.instagram.com/samkyy1/" target="_blank">📸 samkyy1</a>
+      <a class="link-btn" href="https://www.instagram.com/kartikadevi_40/" target="_blank">📸 kartikadevi_40</a>
+      <a class="link-btn" href="https://www.instagram.com/akhdanbel/" target="_blank">📸 akhdanbel</a>
+      <a class="link-btn" href="https://www.instagram.com/dikamuzaaqi/" target="_blank">📸 dikamuzaaqi</a>
+      <a class="link-btn" href="https://www.instagram.com/_ilmanz1/" target="_blank">📸 _ilmanz1</a>
+      <a class="link-btn" href="https://www.instagram.com/devinargaitunamaorang/" target="_blank">📸 devinargaitunamaorang</a>
+    </div>
+
+    <h2 style="margin-top:40px;">📸 Galeri Foto</h2>
+    <div class="gallery">
+      <img src="https://i.imgur.com/JzjP6zB.jpg" alt="Foto 1">
+      <img src="https://i.imgur.com/4AiXzf8.jpeg" alt="Foto 2">
+      <img src="https://i.imgur.com/7WjD4Dq.jpeg" alt="Foto 3">
+      <img src="https://i.imgur.com/A7m6a7F.jpeg" alt="Foto 4">
+      <img src="https://i.imgur.com/1Yc1H5b.jpeg" alt="Foto 5">
     </div>
   </div>
 
@@ -173,25 +221,34 @@
     <button class="toggle-theme" onclick="toggleTheme()">⚙️</button>
   </footer>
 
-  <script>
-    // 🌙 Toggle mode
-    const body = document.body;
-    function toggleTheme() {
-      body.classList.toggle("dark-mode");
-    }
+  <div class="popup" id="popup"><img id="popupImg" src=""></div>
 
-    // ⚙️ Animasi partikel teknologi
+  <script>
+    // Mode gelap / terang
+    const body = document.body;
+    function toggleTheme() { body.classList.toggle("dark-mode"); }
+
+    // Popup foto
+    const popup = document.getElementById("popup");
+    const popupImg = document.getElementById("popupImg");
+    document.querySelectorAll(".gallery img").forEach(img => {
+      img.addEventListener("click", () => {
+        popupImg.src = img.src;
+        popup.style.display = "flex";
+      });
+    });
+    popup.addEventListener("click", () => popup.style.display = "none");
+
+    // Partikel teknologi
     const canvas = document.getElementById("techCanvas");
     const ctx = canvas.getContext("2d");
     let particles = [];
-
     function resizeCanvas() {
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
     }
     window.addEventListener("resize", resizeCanvas);
     resizeCanvas();
-
     class Particle {
       constructor() {
         this.x = Math.random() * canvas.width;
@@ -216,23 +273,15 @@
         ctx.fill();
       }
     }
-
     function initParticles() {
       particles = [];
-      for (let i = 0; i < 100; i++) {
-        particles.push(new Particle());
-      }
+      for (let i = 0; i < 100; i++) particles.push(new Particle());
     }
-
     function animate() {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-      particles.forEach(p => {
-        p.update();
-        p.draw();
-      });
+      particles.forEach(p => { p.update(); p.draw(); });
       requestAnimationFrame(animate);
     }
-
     initParticles();
     animate();
   </script>

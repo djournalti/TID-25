@@ -3,7 +3,33 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>LinkNest</title>
+  <title>LinkNest - Hub TIF-D @djournal.ti</title>
+  <meta name="description" content="Kumpulan link Instagram TIF-D dan galeri foto. Selamat datang di web komunitas Teknik Informatika Desain!">
+  
+  <!-- Open Graph untuk sharing sosial -->
+  <meta property="og:title" content="LinkNest - Hub TIF-D">
+  <meta property="og:description" content="Ikuti anggota TIF-D di Instagram dan lihat galeri foto kami!">
+  <meta property="og:image" content="https://i.imgur.com/h7DRznt.jpeg">
+  <meta property="og:url" content="https://djournalti.github.io/TID-25/">
+  <meta property="og:type" content="website">
+  
+  <!-- Favicon (ganti dengan ikon-mu, upload ke repo sebagai favicon.ico atau pakai PNG) -->
+  <link rel="icon" href="https://via.placeholder.com/32?text=🔗" type="image/x-icon">
+  
+  <!-- Google Fonts untuk Poppins -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+  
+  <!-- Google Analytics (opsional, uncomment dan ganti ID untuk track visitor) -->
+  <!--
+  <script async src="https://www.googletagmanager.com/gtag/js?id=GA_MEASUREMENT_ID"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'GA_MEASUREMENT_ID');
+  </script>
+  -->
+  
   <style>
     :root {
       --blue-light: #64b5f6;
@@ -66,6 +92,15 @@
       text-shadow: 0 0 10px rgba(255,255,255,0.3);
     }
 
+    .bio {
+      font-size: 1.1em;
+      margin-bottom: 20px;
+      opacity: 0.9;
+      max-width: 90%;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
     .links {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
@@ -109,6 +144,7 @@
       transition: 0.3s;
       cursor: pointer;
       box-shadow: 0 0 8px rgba(0,229,255,0.5);
+      loading: lazy; /* Optimasi loading gambar */
     }
 
     .gallery img:hover {
@@ -121,6 +157,7 @@
       bottom: 15px;
       text-align: center;
       z-index: 3;
+      width: 100%;
     }
 
     .toggle-theme {
@@ -132,11 +169,27 @@
       color: white;
       cursor: pointer;
       transition: 0.3s;
+      margin-right: 10px;
     }
 
     .toggle-theme:hover {
       background: rgba(255,255,255,0.2);
       transform: rotate(20deg);
+    }
+
+    .share-btn {
+      background: rgba(255,255,255,0.2);
+      border: 2px solid white;
+      border-radius: 20px;
+      padding: 8px 12px;
+      color: white;
+      cursor: pointer;
+      margin: 0 5px;
+      transition: 0.3s;
+    }
+
+    .share-btn:hover {
+      background: rgba(255,255,255,0.3);
     }
 
     /* Popup image */
@@ -158,132 +211,48 @@
       border-radius: 10px;
       box-shadow: 0 0 20px #00e5ff;
     }
+
+    /* Responsif mobile */
+    @media (max-width: 480px) {
+      .links {
+        grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+        gap: 8px;
+      }
+      h1 { font-size: 1.5em; }
+      .avatar { width: 100px; height: 100px; }
+    }
   </style>
 </head>
 <body>
   <canvas id="techCanvas"></canvas>
   <div class="content">
-    <img src="https://i.imgur.com/h7DRznt.jpeg" alt="Foto Saya" class="avatar">
+    <img src="https://i.imgur.com/h7DRznt.jpeg" alt="Foto Profil @djournal.ti - Komunitas TIF-D" class="avatar">
     <h1>@djournal.ti</h1>
-    <p>⚡ Halo! Selamat datang di web TIF-D</p>
+    <p class="bio">⚡ Halo! Selamat datang di web TIF-D. Ikuti anggota kami di Instagram dan cek galeri foto event terbaru. Join komunitas Teknik Informatika Desain!</p>
 
     <div class="links">
-      <a class="link-btn" href="https://www.instagram.com/eevaaue_/" target="_blank">📸 eevaaue_</a>
-      <a class="link-btn" href="https://www.instagram.com/alwalidd.25/" target="_blank">📸 alwalidd.25</a>
-      <a class="link-btn" href="https://www.instagram.com/heyosmths/" target="_blank">📸 heyosmths</a>
-      <a class="link-btn" href="https://www.instagram.com/girvanagtg/" target="_blank">📸 girvanagtg</a>
-      <a class="link-btn" href="https://www.instagram.com/Kosta_ppp/" target="_blank">📸 Kosta_ppp</a>
-      <a class="link-btn" href="https://www.instagram.com/fadliakbar362/" target="_blank">📸 fadliakbar362</a>
-      <a class="link-btn" href="https://www.instagram.com/5w1h_517/" target="_blank">📸 5w1h_517</a>
-      <a class="link-btn" href="https://www.instagram.com/luk_lukmankhak23/" target="_blank">📸 luk_lukmankhak23</a>
-      <a class="link-btn" href="https://www.instagram.com/alfazkar2212/" target="_blank">📸 alfazkar2212</a>
-      <a class="link-btn" href="https://www.instagram.com/_firndaa/" target="_blank">📸 _firndaa</a>
-      <a class="link-btn" href="https://www.instagram.com/maelatulw/" target="_blank">📸 maelatulw</a>
-      <a class="link-btn" href="https://www.instagram.com/nation.fajar/" target="_blank">📸 nation.fajar</a>
-      <a class="link-btn" href="https://www.instagram.com/rhmiinblaa_/" target="_blank">📸 rhmiinblaa_</a>
-      <a class="link-btn" href="https://www.instagram.com/fadilsdhmandi_/" target="_blank">📸 fadilsdhmandi_</a>
-      <a class="link-btn" href="https://www.instagram.com/rifza_mhda/" target="_blank">📸 rifza_mhda</a>
-      <a class="link-btn" href="https://www.instagram.com/ilham_suf07/" target="_blank">📸 ilham_suf07</a>
-      <a class="link-btn" href="https://www.instagram.com/faizmaulana.h/" target="_blank">📸 faizmaulana.h</a>
-      <a class="link-btn" href="https://www.instagram.com/t.lithanrl/" target="_blank">📸 t.lithanrl</a>
-      <a class="link-btn" href="https://www.instagram.com/fq.bilaa/" target="_blank">📸 fq.bilaa</a>
-      <a class="link-btn" href="https://www.instagram.com/artheyaelf/" target="_blank">📸 artheyaelf</a>
-      <a class="link-btn" href="https://www.instagram.com/knlls_06/" target="_blank">📸 knlls_06</a>
-      <a class="link-btn" href="https://www.instagram.com/haikalkhabibiee/" target="_blank">📸 haikalkhabibiee</a>
-      <a class="link-btn" href="https://www.instagram.com/uvwndii._/" target="_blank">📸 uvwndii._</a>
-      <a class="link-btn" href="https://www.instagram.com/raemzs/" target="_blank">📸 raemzs</a>
-      <a class="link-btn" href="https://www.instagram.com/nafis.ainul/" target="_blank">📸 nafis.ainul</a>
-      <a class="link-btn" href="https://www.instagram.com/vikadwindaa/" target="_blank">📸 vikadwindaa</a>
-      <a class="link-btn" href="https://www.instagram.com/4rraabb/" target="_blank">📸 4rraabb</a>
-      <a class="link-btn" href="https://www.instagram.com/danweee/" target="_blank">📸 danweee</a>
-      <a class="link-btn" href="https://www.instagram.com/riky_aja01/" target="_blank">📸 riky_aja01</a>
-      <a class="link-btn" href="https://www.instagram.com/aruuladzim/" target="_blank">📸 aruuladzim</a>
-      <a class="link-btn" href="https://www.instagram.com/attilla_mardhotillah_ar_rofiq/" target="_blank">📸 attilla_mardhotillah_ar_rofiq</a>
-      <a class="link-btn" href="https://www.instagram.com/samkyy1/" target="_blank">📸 samkyy1</a>
-      <a class="link-btn" href="https://www.instagram.com/kartikadevi_40/" target="_blank">📸 kartikadevi_40</a>
-      <a class="link-btn" href="https://www.instagram.com/akhdanbel/" target="_blank">📸 akhdanbel</a>
-      <a class="link-btn" href="https://www.instagram.com/dikamuzaaqi/" target="_blank">📸 dikamuzaaqi</a>
-      <a class="link-btn" href="https://www.instagram.com/_ilmanz1/" target="_blank">📸 _ilmanz1</a>
-      <a class="link-btn" href="https://www.instagram.com/devinargaitunamaorang/" target="_blank">📸 devinargaitunamaorang</a>
-    </div>
-
-    <h2 style="margin-top:40px;">📸 Galeri Foto</h2>
-    <div class="gallery">
-      <img src="https://i.imgur.com/JzjP6zB.jpg" alt="Foto 1">
-      <img src="https://i.imgur.com/4AiXzf8.jpeg" alt="Foto 2">
-      <img src="https://i.imgur.com/7WjD4Dq.jpeg" alt="Foto 3">
-      <img src="https://i.imgur.com/A7m6a7F.jpeg" alt="Foto 4">
-      <img src="https://i.imgur.com/1Yc1H5b.jpeg" alt="Foto 5">
-    </div>
-  </div>
-
-  <footer>
-    <button class="toggle-theme" onclick="toggleTheme()">⚙️</button>
-  </footer>
-
-  <div class="popup" id="popup"><img id="popupImg" src=""></div>
-
-  <script>
-    // Mode gelap / terang
-    const body = document.body;
-    function toggleTheme() { body.classList.toggle("dark-mode"); }
-
-    // Popup foto
-    const popup = document.getElementById("popup");
-    const popupImg = document.getElementById("popupImg");
-    document.querySelectorAll(".gallery img").forEach(img => {
-      img.addEventListener("click", () => {
-        popupImg.src = img.src;
-        popup.style.display = "flex";
-      });
-    });
-    popup.addEventListener("click", () => popup.style.display = "none");
-
-    // Partikel teknologi
-    const canvas = document.getElementById("techCanvas");
-    const ctx = canvas.getContext("2d");
-    let particles = [];
-    function resizeCanvas() {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-    }
-    window.addEventListener("resize", resizeCanvas);
-    resizeCanvas();
-    class Particle {
-      constructor() {
-        this.x = Math.random() * canvas.width;
-        this.y = Math.random() * canvas.height;
-        this.size = Math.random() * 2 + 1;
-        this.speedX = Math.random() * 0.6 - 0.3;
-        this.speedY = Math.random() * 0.6 - 0.3;
-        this.alpha = Math.random() * 0.5 + 0.3;
-      }
-      update() {
-        this.x += this.speedX;
-        this.y += this.speedY;
-        if (this.x < 0 || this.x > canvas.width || this.y < 0 || this.y > canvas.height) {
-          this.x = Math.random() * canvas.width;
-          this.y = Math.random() * canvas.height;
-        }
-      }
-      draw() {
-        ctx.beginPath();
-        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(0, 229, 255, ${this.alpha})`;
-        ctx.fill();
-      }
-    }
-    function initParticles() {
-      particles = [];
-      for (let i = 0; i < 100; i++) particles.push(new Particle());
-    }
-    function animate() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      particles.forEach(p => { p.update(); p.draw(); });
-      requestAnimationFrame(animate);
-    }
-    initParticles();
-    animate();
-  </script>
-</body>
-</html>
+      <a class="link-btn" href="https://www.instagram.com/eevaaue_/" target="_blank" rel="noopener noreferrer" aria-label="Instagram eevaaue_">📸 eevaaue_</a>
+      <a class="link-btn" href="https://www.instagram.com/alwalidd.25/" target="_blank" rel="noopener noreferrer" aria-label="Instagram alwalidd.25">📸 alwalidd.25</a>
+      <a class="link-btn" href="https://www.instagram.com/heyosmths/" target="_blank" rel="noopener noreferrer" aria-label="Instagram heyosmths">📸 heyosmths</a>
+      <a class="link-btn" href="https://www.instagram.com/girvanagtg/" target="_blank" rel="noopener noreferrer" aria-label="Instagram girvanagtg">📸 girvanagtg</a>
+      <a class="link-btn" href="https://www.instagram.com/Kosta_ppp/" target="_blank" rel="noopener noreferrer" aria-label="Instagram Kosta_ppp">📸 Kosta_ppp</a>
+      <a class="link-btn" href="https://www.instagram.com/fadliakbar362/" target="_blank" rel="noopener noreferrer" aria-label="Instagram fadliakbar362">📸 fadliakbar362</a>
+      <a class="link-btn" href="https://www.instagram.com/5w1h_517/" target="_blank" rel="noopener noreferrer" aria-label="Instagram 5w1h_517">📸 5w1h_517</a>
+      <a class="link-btn" href="https://www.instagram.com/luk_lukmankhak23/" target="_blank" rel="noopener noreferrer" aria-label="Instagram luk_lukmankhak23">📸 luk_lukmankhak23</a>
+      <a class="link-btn" href="https://www.instagram.com/alfazkar2212/" target="_blank" rel="noopener noreferrer" aria-label="Instagram alfazkar2212">📸 alfazkar2212</a>
+      <a class="link-btn" href="https://www.instagram.com/_firndaa/" target="_blank" rel="noopener noreferrer" aria-label="Instagram _firndaa">📸 _firndaa</a>
+      <a class="link-btn" href="https://www.instagram.com/maelatulw/" target="_blank" rel="noopener noreferrer" aria-label="Instagram maelatulw">📸 maelatulw</a>
+      <a class="link-btn" href="https://www.instagram.com/nation.fajar/" target="_blank" rel="noopener noreferrer" aria-label="Instagram nation.fajar">📸 nation.fajar</a>
+      <a class="link-btn" href="https://www.instagram.com/rhmiinblaa_/" target="_blank" rel="noopener noreferrer" aria-label="Instagram rhmiinblaa_">📸 rhmiinblaa_</a>
+      <a class="link-btn" href="https://www.instagram.com/fadilsdhmandi_/" target="_blank" rel="noopener noreferrer" aria-label="Instagram fadilsdhmandi_">📸 fadilsdhmandi_</a>
+      <a class="link-btn" href="https://www.instagram.com/rifza_mhda/" target="_blank" rel="noopener noreferrer" aria-label="Instagram rifza_mhda">📸 rifza_mhda</a>
+      <a class="link-btn" href="https://www.instagram.com/ilham_suf07/" target="_blank" rel="noopener noreferrer" aria-label="Instagram ilham_suf07">📸 ilham_suf07</a>
+      <a class="link-btn" href="https://www.instagram.com/faizmaulana.h/" target="_blank" rel="noopener noreferrer" aria-label="Instagram faizmaulana.h">📸 faizmaulana.h</a>
+      <a class="link-btn" href="https://www.instagram.com/t.lithanrl/" target="_blank" rel="noopener noreferrer" aria-label="Instagram t.lithanrl">📸 t.lithanrl</a>
+      <a class="link-btn" href="https://www.instagram.com/fq.bilaa/" target="_blank" rel="noopener noreferrer" aria-label="Instagram fq.bilaa">📸 fq.bilaa</a>
+      <a class="link-btn" href="https://www.instagram.com/artheyaelf/" target="_blank" rel="noopener noreferrer" aria-label="Instagram artheyaelf">📸 artheyaelf</a>
+      <a class="link-btn" href="https://www.instagram.com/knlls_06/" target="_blank" rel="noopener noreferrer" aria-label="Instagram knlls_06">📸 knlls_06</a>
+      <a class="link-btn" href="https://www.instagram.com/haikalkhabibiee/" target="_blank" rel="noopener noreferrer" aria-label="Instagram haikalkhabibiee">📸 haikalkhabibiee</a>
+      <a class="link-btn" href="https://www.instagram.com/uvwndii._/" target="_blank" rel="noopener noreferrer" aria-label="Instagram uvwndii._">📸 uvwndii._</a>
+      <a class="link-btn" href="https://www.instagram.com/raemzs/" target="_blank" rel="noopener noreferrer" aria-label="Instagram raemzs">📸 raemzs</a>
+      <a class="link-btn" href="https://www.instagram.com/nafis.ainul/" target="_blank" rel="noopener noreferrer" aria-label="Instagram na

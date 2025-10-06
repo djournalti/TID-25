@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Djournal.ti — Explore karya & sosial media kami</title>
+  <meta name="description" content="Djournal.ti — Kumpulan link & galeri TID-25" />
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" href="https://i.imgur.com/h7DRznt.jpeg">
+</head>
+<body>
+  <canvas id="techCanvas" aria-hidden="true"></canvas>
+
+  <header class="site-header">
+    <img class="logo" src="https://i.imgur.com/h7DRznt.jpeg" alt="Djournal.ti logo">
+    <div class="titlebox">
+      <h1>Djournal.ti</h1>
+      <p class="tagline">Explore karya & sosial media kami</p>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="section links-section">
+      <h2 class="section-title">Anggota Kelas</h2>
+      <div id="igGrid" class="ig-grid" aria-live="polite">
+        <!-- IG cards inserted by script.js -->
+      </div>
+    </section>
+
+    <section class="section gallery-section">
+      <h2 class="section-title">Galeri</h2>
+      <div id="gallery" class="gallery-grid">
+        <!-- static Imgur media entries (images + video) -->
+        <div class="media-card"><img src="https://i.imgur.com/RlpE7c8.jpeg" alt="Belvaa 1"></div>
+        <div class="media-card"><img src="https://i.imgur.com/eh5M4Pj.jpeg" alt="Belvaa 2"></div>
+        <div class="media-card"><img src="https://i.imgur.com/IE3Ngy5.jpeg" alt="Belvaa 3"></div>
+        <div class="media-card"><img src="https://i.imgur.com/pJv9YCP.jpeg" alt="Belvaa 4"></div>
+        <div class="media-card"><img src="https://i.imgur.com/oR5iyDL.jpeg" alt="Belvaa 5"></div>
+        <div class="media-card">
+          <video controls muted preload="metadata" playsinline>
+            <source src="https://i.imgur.com/96Evya4.mp4" type="video/mp4">
+            Browser Anda tidak mendukung tag video.
+          </video>
+        </div>
+      </div>
+
+      <div class="gallery-controls">
+        <button id="startSlideshow" class="btn">Start Slideshow</button>
+        <button id="stopSlideshow" class="btn">Stop Slideshow</button>
+      </div>
+    </section>
+  </main>
+
+  <!-- Lightbox -->
+  <div id="lightbox" class="lightbox" aria-hidden="true">
+    <button id="lbClose" class="lb-close" aria-label="Close">✕</button>
+    <div id="lbContent" class="lb-content"></div>
+  </div>
+
+  <button id="themeToggle" class="theme-toggle" aria-label="Toggle theme">⚙️</button>
+
+  <script src="script.js"></script>
+</body>
+</html>

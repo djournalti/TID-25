@@ -1,64 +1,639 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Djournal.ti — Explore karya & sosial media kami</title>
-  <meta name="description" content="Djournal.ti — Kumpulan link & galeri TID-25" />
-  <link rel="stylesheet" href="style.css">
-  <link rel="icon" href="https://i.imgur.com/h7DRznt.jpeg">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Djournal.ti LinkHub</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        :root {
+            --primary: #6C63FF;
+            --secondary: #4A44C6;
+            --accent: #FF6584;
+            --dark: #1A1A2E;
+            --darker: #0F0F1B;
+            --light: #F5F5F7;
+            --card-bg: rgba(255, 255, 255, 0.08);
+            --card-border: rgba(255, 255, 255, 0.1);
+            --text: #FFFFFF;
+            --text-secondary: rgba(255, 255, 255, 0.7);
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            --transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        
+        body {
+            background: linear-gradient(135deg, var(--darker) 0%, var(--dark) 100%);
+            color: var(--text);
+            line-height: 1.6;
+            min-height: 100vh;
+            padding: 20px;
+            overflow-x: hidden;
+        }
+        
+        /* Background Animation */
+        .bg-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+        
+        .floating-shape {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(108, 99, 255, 0.1);
+            filter: blur(40px);
+            animation: float 15s infinite linear;
+        }
+        
+        .shape-1 {
+            width: 300px;
+            height: 300px;
+            top: 10%;
+            left: 5%;
+            animation-delay: 0s;
+        }
+        
+        .shape-2 {
+            width: 200px;
+            height: 200px;
+            top: 60%;
+            left: 80%;
+            animation-delay: 5s;
+            background: rgba(255, 101, 132, 0.1);
+        }
+        
+        .shape-3 {
+            width: 250px;
+            height: 250px;
+            top: 20%;
+            left: 70%;
+            animation-delay: 10s;
+            background: rgba(74, 68, 198, 0.1);
+        }
+        
+        @keyframes float {
+            0%, 100% {
+                transform: translate(0, 0) rotate(0deg);
+            }
+            25% {
+                transform: translate(20px, 20px) rotate(5deg);
+            }
+            50% {
+                transform: translate(0, 40px) rotate(0deg);
+            }
+            75% {
+                transform: translate(-20px, 20px) rotate(-5deg);
+            }
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+        
+        /* Header Styles */
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 30px 20px;
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            border: 1px solid var(--card-border);
+            box-shadow: var(--shadow);
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 1s ease forwards;
+        }
+        
+        .logo {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            background: linear-gradient(45deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: inline-block;
+            animation: pulse 2s infinite;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            font-weight: 700;
+            background: linear-gradient(45deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .description {
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto 20px;
+            font-size: 1.1rem;
+        }
+        
+        .search-box {
+            max-width: 500px;
+            margin: 0 auto;
+            position: relative;
+        }
+        
+        .search-box input {
+            width: 100%;
+            padding: 15px 50px 15px 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid var(--card-border);
+            border-radius: 50px;
+            font-size: 16px;
+            outline: none;
+            color: var(--text);
+            transition: var(--transition);
+        }
+        
+        .search-box input:focus {
+            background: rgba(255, 255, 255, 0.15);
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(108, 99, 255, 0.3);
+        }
+        
+        .search-box input::placeholder {
+            color: var(--text-secondary);
+        }
+        
+        .search-box i {
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-secondary);
+            transition: var(--transition);
+        }
+        
+        .search-box input:focus + i {
+            color: var(--primary);
+        }
+        
+        /* Links Container */
+        .links-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+        
+        .link-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            border-radius: 16px;
+            padding: 20px;
+            text-decoration: none;
+            color: var(--text);
+            border: 1px solid var(--card-border);
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            position: relative;
+            overflow: hidden;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        
+        .link-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transition: left 0.7s;
+        }
+        
+        .link-card:hover::before {
+            left: 100%;
+        }
+        
+        .link-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--primary);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
+        }
+        
+        .instagram-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            flex-shrink: 0;
+            transition: var(--transition);
+        }
+        
+        .link-card:hover .instagram-icon {
+            transform: scale(1.1) rotate(5deg);
+            background: linear-gradient(45deg, var(--accent), var(--primary));
+        }
+        
+        .link-text {
+            flex: 1;
+        }
+        
+        .username {
+            font-weight: 600;
+            font-size: 1.2rem;
+            margin-bottom: 5px;
+        }
+        
+        .link-desc {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+        
+        /* Section Title */
+        .section-title {
+            font-size: 1.8rem;
+            margin: 40px 0 25px;
+            text-align: center;
+            position: relative;
+            padding-bottom: 15px;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 1s ease 0.5s forwards;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            background: linear-gradient(to right, var(--primary), var(--accent));
+            border-radius: 2px;
+        }
+        
+        /* Gallery */
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+            gap: 15px;
+            margin-bottom: 40px;
+        }
+        
+        .gallery-item {
+            border-radius: 12px;
+            overflow: hidden;
+            height: 160px;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            position: relative;
+            opacity: 0;
+            transform: scale(0.9);
+        }
+        
+        .gallery-item:hover {
+            transform: scale(1.05);
+        }
+        
+        .gallery-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition);
+        }
+        
+        .gallery-item:hover .gallery-img {
+            transform: scale(1.1);
+        }
+        
+        .gallery-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
+            color: white;
+            padding: 10px;
+            font-size: 0.8rem;
+            transform: translateY(100%);
+            transition: var(--transition);
+        }
+        
+        .gallery-item:hover .gallery-overlay {
+            transform: translateY(0);
+        }
+        
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 25px;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            border-top: 1px solid var(--card-border);
+            margin-top: 30px;
+            opacity: 0;
+            animation: fadeIn 1s ease 1s forwards;
+        }
+        
+        .counter {
+            display: inline-block;
+            background: var(--card-bg);
+            padding: 8px 20px;
+            border-radius: 50px;
+            margin-top: 15px;
+            font-weight: 600;
+            border: 1px solid var(--card-border);
+        }
+        
+        /* Animations */
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+            }
+        }
+        
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+        }
+        
+        /* Loading Animation */
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: var(--primary);
+            animation: spin 1s ease-in-out infinite;
+            margin-left: 10px;
+        }
+        
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+        
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .links-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .gallery {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .logo {
+                font-size: 2.5rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .gallery {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 10px;
+            }
+            
+            .gallery-item {
+                height: 140px;
+            }
+            
+            .section-title {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
 </head>
 <body>
-  <canvas id="techCanvas" aria-hidden="true"></canvas>
-
-  <header class="site-header">
-    <img class="logo" src="https://i.imgur.com/h7DRznt.jpeg" alt="Djournal.ti logo">
-    <div class="titlebox">
-      <h1>Djournal.ti</h1>
-      <p class="tagline">Explore karya & sosial media kami</p>
+    <!-- Background Animation -->
+    <div class="bg-animation">
+        <div class="floating-shape shape-1"></div>
+        <div class="floating-shape shape-2"></div>
+        <div class="floating-shape shape-3"></div>
     </div>
-  </header>
-
-  <main class="container">
-    <section class="section links-section">
-      <h2 class="section-title">Anggota Kelas</h2>
-      <div id="igGrid" class="ig-grid" aria-live="polite">
-        <!-- IG cards inserted by script.js -->
-      </div>
-    </section>
-
-    <section class="section gallery-section">
-      <h2 class="section-title">Galeri</h2>
-      <div id="gallery" class="gallery-grid">
-        <!-- static Imgur media entries (images + video) -->
-        <div class="media-card"><img src="https://i.imgur.com/RlpE7c8.jpeg" alt="Belvaa 1"></div>
-        <div class="media-card"><img src="https://i.imgur.com/eh5M4Pj.jpeg" alt="Belvaa 2"></div>
-        <div class="media-card"><img src="https://i.imgur.com/IE3Ngy5.jpeg" alt="Belvaa 3"></div>
-        <div class="media-card"><img src="https://i.imgur.com/pJv9YCP.jpeg" alt="Belvaa 4"></div>
-        <div class="media-card"><img src="https://i.imgur.com/oR5iyDL.jpeg" alt="Belvaa 5"></div>
-        <div class="media-card">
-          <video controls muted preload="metadata" playsinline>
-            <source src="https://i.imgur.com/96Evya4.mp4" type="video/mp4">
-            Browser Anda tidak mendukung tag video.
-          </video>
+    
+    <div class="container">
+        <header>
+            <div class="logo">
+                <i class="fas fa-paper-plane"></i>
+            </div>
+            <h1>Djournal.ti LinkHub</h1>
+            <p class="description">Platform terpadu untuk menemukan semua akun Instagram komunitas Djournal.ti</p>
+            
+            <div class="search-box">
+                <input type="text" id="searchInput" placeholder="Cari username atau deskripsi...">
+                <i class="fas fa-search"></i>
+            </div>
+        </header>
+        
+        <h2 class="section-title">Semua Akun Instagram</h2>
+        <div class="links-container" id="linksContainer">
+            <!-- Link cards will be generated by JavaScript -->
         </div>
-      </div>
+        
+        <h2 class="section-title">Galeri Foto Terbaru</h2>
+        <div class="gallery" id="galleryContainer">
+            <!-- Gallery items will be generated by JavaScript -->
+        </div>
+        
+        <footer>
+            <p>© 2023 Djournal.ti LinkHub. All rights reserved.</p>
+            <div class="counter" id="accountCounter">
+                Memuat <span id="counterNumber">0</span> akun <span class="loading"></span>
+            </div>
+        </footer>
+    </div>
 
-      <div class="gallery-controls">
-        <button id="startSlideshow" class="btn">Start Slideshow</button>
-        <button id="stopSlideshow" class="btn">Stop Slideshow</button>
-      </div>
-    </section>
-  </main>
+    <script>
+        // Data akun Instagram
+        const instagramAccounts = [
+            { username: "eevaaue_", description: "Personal blog and lifestyle" },
+            { username: "alwalidd.25", description: "Photography and travel" },
+            { username: "heyosmths", description: "Art and design" },
+            { username: "girvanagtg", description: "Fitness and health" },
+            { username: "Kosta_ppp", description: "Food and recipes" },
+            { username: "fadliakbar362", description: "Technology and gadgets" },
+            { username: "5w1h_517", description: "News and updates" },
+            { username: "luk_lukmankhak23", description: "Music and entertainment" },
+            { username: "alfazkar2212", description: "Motivation and quotes" },
+            { username: "_firndaa", description: "Friends and community" },
+            { username: "maelatulw", description: "Fashion and style" },
+            { username: "nation.fajar", description: "National pride" },
+            { username: "rhmiinblaa_", description: "Nature and outdoors" },
+            { username: "fadilsdhmandi_", description: "Business and entrepreneurship" },
+            { username: "rifza_mhda", description: "Education and learning" },
+            { username: "ilham_suf07", description: "Sports and activities" },
+            { username: "faizmaulana.h", description: "Automotive and cars" },
+            { username: "t.lithanrl", description: "Gaming and esports" },
+            { username: "fq.bilaa", description: "Books and literature" },
+            { username: "artheyaelf", description: "Art and creativity" },
+            { username: "knlls_06", description: "Comedy and humor" },
+            { username: "haikalkhabibiee", description: "Science and innovation" },
+            { username: "uvwndii._", description: "Travel and adventure" },
+            { username: "raemzs", description: "Music production" },
+            { username: "nafis.ainul", description: "Culinary experiences" },
+            { username: "vikadwindaa", description: "Fashion influencer" },
+            { username: "4rraabb", description: "Daily vlogs" },
+            { username: "danweee", description: "DIY and crafts" },
+            { username: "riky_aja01", description: "Photography portfolio" },
+            { username: "aruuladzim", description: "Parenting and family" },
+            { username: "attilla_mardhotillah_ar_rofiq", description: "History and culture" },
+            { username: "samkyy1", description: "Pet lover" },
+            { username: "kartikadevi_40", description: "Yoga and meditation" },
+            { username: "akhdanbel", description: "Architecture and design" },
+            { username: "dikamuzaaqi", description: "Social activism" },
+            { username: "_ilmanz1", description: "Tech reviews" },
+            { username: "devinargaitunamaorang", description: "Personal journey" }
+        ];
 
-  <!-- Lightbox -->
-  <div id="lightbox" class="lightbox" aria-hidden="true">
-    <button id="lbClose" class="lb-close" aria-label="Close">✕</button>
-    <div id="lbContent" class="lb-content"></div>
-  </div>
+        // Gambar untuk galeri (Unsplash placeholder)
+        const galleryImages = [
+            "https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=300&q=80",
+            "https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=300&q=80",
+            "https://images.unsplash.com/photo-1494790108755-2616b612b786?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=300&q=80",
+            "https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=300&q=80",
+            "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=300&q=80",
+            "https://images.unsplash.com/photo-1488426862026-3ee34a7d66df?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=300&q=80",
+            "https://images.unsplash.com/photo-1517841905240-472988babdf9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=300&q=80",
+            "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=300&q=80"
+        ];
 
-  <button id="themeToggle" class="theme-toggle" aria-label="Toggle theme">⚙️</button>
+        // Fungsi untuk membuat kartu link dengan animasi bertahap
+        function createLinkCards(accounts) {
+            const container = document.getElementById('linksContainer');
+            container.innerHTML = '';
+            
+            accounts.forEach((account, index) => {
+                const card = document.createElement('a');
+                card.href = `https://instagram.com/${account.username}`;
+                card.target = "_blank";
+                card.className = 'link-card';
+                card.style.animationDelay = `${index * 0.1}s`;
+                
+                card.innerHTML = `
+                    <div class="instagram-icon">
+                        <i class="fab fa-instagram"></i>
+                    </div>
+                    <div class="link-text">
+                        <div class="username">@${account.username}</div>
+                        <div class="link-desc">${account.description}</div>
+                    </div>
+                `;
+                
+                container.appendChild(card);
+                
+                // Animate card appearance
+                setTimeout(() => {
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }, 100 + (index * 100));
+            });
+            
+            // Update counter dengan animasi angka
+            updateCounter(accounts.length);
+        }
 
-  <script src="script.js"></script>
+        // Fungsi untuk membuat galeri
+        
+        function createGallery() {
+            const container = document.getElementById('galleryContainer');
+            container.innerHTML = '';
+            
+            galleryImages.forEach((image, index) => {
+                const account = instagramAccounts[index % instagramAccounts.length];
+                
+                const galleryItem = document.createElement('div');
+                galleryItem.className = 'gallery-item';
+                galleryItem.style.animationDelay = `${index * 0.1}s`;
+                
+                galleryItem.innerHTML = `
+                    <img src="${image}" alt="Photo from ${account.username}" class="gallery-img">
+                    <div class="gallery-overlay">@${account.username}</div>
+                `;
+                
+                container.appendChild(galleryItem);
+                
+                // Animate gallery item appearance
+                setTimeout(() => {
+                    galleryItem.style.opacity = '1';
+                    galleryItem.style.transform = 'scale(1)';
+                }, 500 + (index * 100));
+            });
+        }
+
+        // Fungsi untuk mencari akun
+        function searchAccounts() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            const filteredAccounts = instagramAccounts.filter(account => 
+                account.username.toLowerCase().includes(searchTerm) || 
+                account.description.toLowerCase().includes(searchTerm)
+            );
+            
+            createLinkCards(filteredAccounts);
+        }
+
+        // Fungsi untuk update counter dengan animasi angka
+        function updateCounter(count) {
+            const counterElement = document.getElementById('counterNumber');
+            let currentCount = 0;
+            const increment = Math.ceil(count / 20);
+            
+            const timer = setInterval(() => {
+                currentCount += increment;
+                if (currentCount >= count) {
+                    currentCount = count;
+                    clearInterval(timer);
+                }
+                counterElement.textContent = currentCount;
+            }, 50);
+        }
+
+        // Inisialisasi
+        document.addEventListener('DOMContentLoaded', () => {
+            createLinkCards(instagramAccounts);
+            createGallery();
+            
+            // Event listener untuk pencarian
+            document.getElementById('searchInput').addEventListener('input', searchAccounts);
+        });
+    </script>
 </body>
 </html>

@@ -1,301 +1,79 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Djournal.TI</title>
-  <style>
-    :root {
-      --primary: #4a74ff;
-      --secondary: #1d3cff;
-      --bg: #f4f6ff;
-      --text: #1a1a1a;
-      --card: #ffffff;
-    }
-    body.dark {
-      --bg: #0c111e;
-      --text: #e6eaff;
-      --card: #151c2f;
-    }
-
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: "Poppins", sans-serif;
-      transition: all 0.3s ease;
-    }
-
-    body {
-      background: var(--bg);
-      color: var(--text);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      min-height: 100vh;
-      padding: 20px;
-    }
-
-    header {
-      width: 100%;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      background: var(--card);
-      border-radius: 16px;
-      padding: 10px 20px;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
-      position: sticky;
-      top: 0;
-      z-index: 10;
-    }
-
-    header img {
-      width: 45px;
-      height: 45px;
-      border-radius: 12px;
-    }
-
-    header h1 {
-      font-size: 1.3rem;
-      color: var(--primary);
-    }
-
-    .toggle-theme {
-      background: none;
-      border: 2px solid var(--primary);
-      border-radius: 50%;
-      color: var(--primary);
-      padding: 8px;
-      cursor: pointer;
-      font-size: 1.1rem;
-      transition: 0.3s;
-    }
-
-    .toggle-theme:hover {
-      background: var(--primary);
-      color: white;
-    }
-
-    main {
-      width: 100%;
-      max-width: 650px;
-      text-align: center;
-      margin-top: 25px;
-    }
-
-    h2 {
-      color: var(--primary);
-      font-size: 1.6rem;
-      margin-bottom: 10px;
-    }
-
-    p {
-      font-size: 1rem;
-      opacity: 0.9;
-      margin-bottom: 20px;
-      line-height: 1.6;
-    }
-
-    .socials {
-      display: flex;
-      justify-content: center;
-      gap: 15px;
-      margin-bottom: 40px;
-    }
-
-    .socials a {
-      background: var(--card);
-      border: 2px solid var(--primary);
-      color: var(--primary);
-      padding: 10px;
-      border-radius: 50%;
-      font-size: 1.2rem;
-      text-decoration: none;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-    }
-
-    .socials a:hover {
-      background: var(--primary);
-      color: white;
-    }
-
-    .menu {
-      text-align: left;
-    }
-
-    .menu h3 {
-      font-size: 1.2rem;
-      margin-bottom: 10px;
-      color: var(--text);
-      text-align: center;
-    }
-
-    .menu a {
-      display: block;
-      text-decoration: none;
-      color: var(--text);
-      background: var(--card);
-      margin: 8px 0;
-      padding: 12px 16px;
-      border-radius: 12px;
-      font-weight: 500;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-      border-left: 4px solid var(--primary);
-    }
-
-    .menu a:hover {
-      background: var(--primary);
-      color: white;
-      transform: translateX(4px);
-    }
-
-    /* GALERI FOTO */
-    .gallery {
-      margin-top: 40px;
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-      gap: 15px;
-      width: 100%;
-    }
-
-    .gallery img {
-      width: 100%;
-      border-radius: 12px;
-      cursor: pointer;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-      transition: 0.3s;
-    }
-
-    .gallery img:hover {
-      transform: scale(1.05);
-      box-shadow: 0 6px 18px rgba(74,116,255,0.5);
-    }
-
-    /* POPUP */
-    .popup {
-      position: fixed;
-      display: none;
-      justify-content: center;
-      align-items: center;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0,0,0,0.85);
-      z-index: 100;
-    }
-
-    .popup img {
-      width: 80%;
-      max-width: 500px;
-      border-radius: 10px;
-      box-shadow: 0 0 20px var(--primary);
-    }
-
-    footer {
-      margin-top: 60px;
-      font-size: 0.9rem;
-      opacity: 0.7;
-      text-align: center;
-    }
-  </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Djournal TI — Link Hub</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <header>
-    <div style="display:flex; align-items:center; gap:10px;">
-      <img src="https://i.imgur.com/h7DRznt.jpeg" alt="Logo Djournal.TI">
-      <h1>Djournal.TI</h1>
-    </div>
-    <button class="toggle-theme" onclick="toggleTheme()">⚙️</button>
+    <img src="https://i.imgur.com/h7DRznt.jpeg" alt="Avatar" class="avatar">
+    <h1>@djournal.ti</h1>
+    <p>Klik link di bawah ini 👇</p>
   </header>
 
   <main>
-    <h2>Djournal.TI</h2>
-    <p>Website resmi kelas TID-25. Wadah informasi, kreativitas, dan persahabatan antar anggota.</p>
+    <section class="links">
+      <a href="https://www.instagram.com/djournal.ti" target="_blank">🌟 Instagram Utama</a>
 
-    <div class="socials">
-      <a href="https://www.instagram.com/djournal.ti" target="_blank" title="Instagram">📸</a>
-      <a href="https://www.tiktok.com" target="_blank" title="TikTok">🎵</a>
-      <a href="https://maps.google.com" target="_blank" title="Lokasi">📍</a>
-    </div>
+      <!-- Semua akun IG lainnya -->
+      <a href="https://www.instagram.com/eevaaue_" target="_blank">eevaaue_</a>
+      <a href="https://www.instagram.com/alwalidd.25" target="_blank">alwalidd.25</a>
+      <a href="https://www.instagram.com/heyosmths" target="_blank">heyosmths</a>
+      <a href="https://www.instagram.com/girvanagtg" target="_blank">girvanagtg</a>
+      <a href="https://www.instagram.com/Kosta_ppp" target="_blank">Kosta_ppp</a>
+      <a href="https://www.instagram.com/fadliakbar362" target="_blank">fadliakbar362</a>
+      <a href="https://www.instagram.com/5w1h_517" target="_blank">5w1h_517</a>
+      <a href="https://www.instagram.com/luk_lukmankhak23" target="_blank">luk_lukmankhak23</a>
+      <a href="https://www.instagram.com/alfazkar2212" target="_blank">alfazkar2212</a>
+      <a href="https://www.instagram.com/_firndaa" target="_blank">_firndaa</a>
+      <a href="https://www.instagram.com/maelatulw" target="_blank">maelatulw</a>
+      <a href="https://www.instagram.com/nation.fajar" target="_blank">nation.fajar</a>
+      <a href="https://www.instagram.com/rhmiinblaa_" target="_blank">rhmiinblaa_</a>
+      <a href="https://www.instagram.com/fadilsdhmandi_" target="_blank">fadilsdhmandi_</a>
+      <a href="https://www.instagram.com/rifza_mhda" target="_blank">rifza_mhda</a>
+      <a href="https://www.instagram.com/ilham_suf07" target="_blank">ilham_suf07</a>
+      <a href="https://www.instagram.com/faizmaulana.h" target="_blank">faizmaulana.h</a>
+      <a href="https://www.instagram.com/t.lithanrl" target="_blank">t.lithanrl</a>
+      <a href="https://www.instagram.com/fq.bilaa" target="_blank">fq.bilaa</a>
+      <a href="https://www.instagram.com/artheyaelf" target="_blank">artheyaelf</a>
+      <a href="https://www.instagram.com/knlls_06" target="_blank">knlls_06</a>
+      <a href="https://www.instagram.com/haikalkhabibiee" target="_blank">haikalkhabibiee</a>
+      <a href="https://www.instagram.com/uvwndii._" target="_blank">uvwndii._</a>
+      <a href="https://www.instagram.com/raemzs" target="_blank">raemzs</a>
+      <a href="https://www.instagram.com/nafis.ainul" target="_blank">nafis.ainul</a>
+      <a href="https://www.instagram.com/vikadwindaa" target="_blank">vikadwindaa</a>
+      <a href="https://www.instagram.com/4rraabb" target="_blank">4rraabb</a>
+      <a href="https://www.instagram.com/danweee" target="_blank">danweee</a>
+      <a href="https://www.instagram.com/riky_aja01" target="_blank">riky_aja01</a>
+      <a href="https://www.instagram.com/aruuladzim" target="_blank">aruuladzim</a>
+      <a href="https://www.instagram.com/attilla_mardhotillah_ar_rofiq" target="_blank">attilla_mardhotillah_ar_rofiq</a>
+      <a href="https://www.instagram.com/samkyy1" target="_blank">samkyy1</a>
+      <a href="https://www.instagram.com/kartikadevi_40" target="_blank">kartikadevi_40</a>
+      <a href="https://www.instagram.com/akhdanbel" target="_blank">akhdanbel</a>
+      <a href="https://www.instagram.com/dikamuzaaqi" target="_blank">dikamuzaaqi</a>
+      <a href="https://www.instagram.com/_ilmanz1" target="_blank">_ilmanz1</a>
+      <a href="https://www.instagram.com/devinargaitunamaorang" target="_blank">devinargaitunamaorang</a>
+    </section>
 
-    <div class="menu">
-      <h3>Link Anggota Kelas</h3>
-
-      <!-- IG Anggota -->
-      <a href="https://instagram.com/eevaaue_" target="_blank">@eevaaue_</a>
-      <a href="https://instagram.com/alwalidd.25" target="_blank">@alwalidd.25</a>
-      <a href="https://instagram.com/heyosmths" target="_blank">@heyosmths</a>
-      <a href="https://instagram.com/girvanagtg" target="_blank">@girvanagtg</a>
-      <a href="https://instagram.com/Kosta_ppp" target="_blank">@Kosta_ppp</a>
-      <a href="https://instagram.com/fadliakbar362" target="_blank">@fadliakbar362</a>
-      <a href="https://instagram.com/5w1h_517" target="_blank">@5w1h_517</a>
-      <a href="https://instagram.com/luk_lukmankhak23" target="_blank">@luk_lukmankhak23</a>
-      <a href="https://instagram.com/alfazkar2212" target="_blank">@alfazkar2212</a>
-      <a href="https://instagram.com/_firndaa" target="_blank">@_firndaa</a>
-      <a href="https://instagram.com/maelatulw" target="_blank">@maelatulw</a>
-      <a href="https://instagram.com/nation.fajar" target="_blank">@nation.fajar</a>
-      <a href="https://instagram.com/rhmiinblaa_" target="_blank">@rhmiinblaa_</a>
-      <a href="https://instagram.com/fadilsdhmandi_" target="_blank">@fadilsdhmandi_</a>
-      <a href="https://instagram.com/rifza_mhda" target="_blank">@rifza_mhda</a>
-      <a href="https://instagram.com/ilham_suf07" target="_blank">@ilham_suf07</a>
-      <a href="https://instagram.com/faizmaulana.h" target="_blank">@faizmaulana.h</a>
-      <a href="https://instagram.com/t.lithanrl" target="_blank">@t.lithanrl</a>
-      <a href="https://instagram.com/fq.bilaa" target="_blank">@fq.bilaa</a>
-      <a href="https://instagram.com/artheyaelf" target="_blank">@artheyaelf</a>
-      <a href="https://instagram.com/knlls_06" target="_blank">@knlls_06</a>
-      <a href="https://instagram.com/haikalkhabibiee" target="_blank">@haikalkhabibiee</a>
-      <a href="https://instagram.com/uvwndii._" target="_blank">@uvwndii._</a>
-      <a href="https://instagram.com/raemzs" target="_blank">@raemzs</a>
-      <a href="https://instagram.com/nafis.ainul" target="_blank">@nafis.ainul</a>
-      <a href="https://instagram.com/vikadwindaa" target="_blank">@vikadwindaa</a>
-      <a href="https://instagram.com/4rraabb" target="_blank">@4rraabb</a>
-      <a href="https://instagram.com/danweee" target="_blank">@danweee</a>
-      <a href="https://instagram.com/riky_aja01" target="_blank">@riky_aja01</a>
-      <a href="https://instagram.com/aruuladzim" target="_blank">@aruuladzim</a>
-      <a href="https://instagram.com/attilla_mardhotillah_ar_rofiq" target="_blank">@attilla_mardhotillah_ar_rofiq</a>
-      <a href="https://instagram.com/samkyy1" target="_blank">@samkyy1</a>
-      <a href="https://instagram.com/kartikadevi_40" target="_blank">@kartikadevi_40</a>
-      <a href="https://instagram.com/akhdanbel" target="_blank">@akhdanbel</a>
-      <a href="https://instagram.com/dikamuzaaqi" target="_blank">@dikamuzaaqi</a>
-      <a href="https://instagram.com/_ilmanz1" target="_blank">@_ilmanz1</a>
-      <a href="https://instagram.com/devinargaitunamaorang" target="_blank">@devinargaitunamaorang</a>
-    </div>
-
-    <h3 style="margin-top:40px; color:var(--primary);">📸 Galeri Kelas</h3>
-    <div class="gallery">
-      <img src="https://i.imgur.com/JzjP6zB.jpg" alt="Foto 1">
-      <img src="https://i.imgur.com/4AiXzf8.jpeg" alt="Foto 2">
-      <img src="https://i.imgur.com/7WjD4Dq.jpeg" alt="Foto 3">
-      <img src="https://i.imgur.com/A7m6a7F.jpeg" alt="Foto 4">
-      <img src="https://i.imgur.com/1Yc1H5b.jpeg" alt="Foto 5">
-    </div>
+    <section class="gallery">
+      <h2>Galeri</h2>
+      <div class="media-card"><img src="https://i.imgur.com/RlpE7c8.jpeg" alt="Belvaa 1"></div>
+      <div class="media-card"><img src="https://i.imgur.com/eh5M4Pj.jpeg" alt="Belvaa 2"></div>
+      <div class="media-card"><img src="https://i.imgur.com/IE3Ngy5.jpeg" alt="Belvaa 3"></div>
+      <div class="media-card"><img src="https://i.imgur.com/pJv9YCP.jpeg" alt="Belvaa 4"></div>
+      <div class="media-card"><img src="https://i.imgur.com/oR5iyDL.jpeg" alt="Belvaa 5"></div>
+      <div class="media-card">
+        <video controls muted loop>
+          <source src="https://i.imgur.com/96Evya4.mp4" type="video/mp4">
+        </video>
+      </div>
+    </section>
   </main>
 
   <footer>
-    © 2025 Djournal.TI — TID-25 Official Class Website
+    <p>© 2025 Djournal TI | Mode otomatis terang/gelap aktif 🌗</p>
   </footer>
-
-  <div class="popup" id="popup">
-    <img id="popupImg" src="">
-  </div>
-
-  <script>
-    function toggleTheme() {
-      document.body.classList.toggle("dark");
-    }
-
-    // Popup galeri
-    const popup = document.getElementById("popup");
-    const popupImg = document.getElementById("popupImg");
-    document.querySelectorAll(".gallery img").forEach(img => {
-      img.addEventListener("click", () => {
-        popupImg.src = img.src;
-        popup.style.display = "flex";
-      });
-    });
-    popup.addEventListener("click", () => popup.style.display = "none");
-  </script>
 </body>
-  </html>
+</html>

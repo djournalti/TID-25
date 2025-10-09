@@ -151,9 +151,11 @@ function startVoiceSearch() {
     const recognition = new webkitSpeechRecognition();
     recognition.continuous = false;
     recognition.interimResults = false;
+    recognition.lang = 'id-ID'; // Set language to Indonesian
 
     recognition.onstart = function() {
         voiceSearch.classList.add('listening');
+        voiceSearch.innerHTML = '<i class="fas fa-circle"></i>';
     };
 
     recognition.onresult = function(event) {
@@ -161,14 +163,18 @@ function startVoiceSearch() {
         document.getElementById('searchInput').value = transcript;
         searchAccounts();
         voiceSearch.classList.remove('listening');
+        voiceSearch.innerHTML = '<i class="fas fa-microphone"></i>';
     };
 
     recognition.onerror = function() {
         voiceSearch.classList.remove('listening');
+        voiceSearch.innerHTML = '<i class="fas fa-microphone"></i>';
+        alert('Error dalam voice recognition. Coba lagi.');
     };
 
     recognition.onend = function() {
         voiceSearch.classList.remove('listening');
+        voiceSearch.innerHTML = '<i class="fas fa-microphone"></i>';
     };
 
     recognition.start();

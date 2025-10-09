@@ -320,69 +320,68 @@ h1 {
     font-size: 1.1rem;
 }
 
-./* ==================== FIXED SEARCH BOX ==================== */
+/* ==================== FIXED SEARCH BOX - MENYATU ==================== */
 .search-box {
     max-width: 500px;
     margin: 0 auto;
     position: relative;
     display: flex;
     align-items: center;
-}
-
-.search-box input {
-    width: 100%;
-    padding: 15px 100px 15px 20px; /* More right padding for buttons */
     background: rgba(255, 255, 255, 0.1);
     border: 1px solid var(--card-border);
     border-radius: 50px;
-    font-size: 16px;
-    outline: none;
-    color: var(--text);
-    transition: background-color 0.3s ease,
-               border-color 0.3s ease,
-               box-shadow 0.3s ease;
-    will-change: background-color, border-color;
-    flex: 1;
+    padding: 5px;
+    transition: all 0.3s ease;
 }
 
-.search-box input:focus {
+.search-box:focus-within {
     background: rgba(255, 255, 255, 0.15);
     border-color: var(--primary);
     box-shadow: 0 0 0 3px rgba(108, 99, 255, 0.3);
 }
 
-.search-icon {
-    position: absolute;
-    right: 60px; /* Position between input and voice button */
-    top: 50%;
-    transform: translateY(-50%);
-    color: var(--text-secondary);
-    transition: var(--transition);
+.search-box input {
+    width: 100%;
+    padding: 12px 20px;
+    background: transparent;
+    border: none;
+    border-radius: 50px;
+    font-size: 16px;
+    outline: none;
+    color: var(--text);
+    flex: 1;
 }
 
-.search-box input:focus + .search-icon {
+.search-box input::placeholder {
+    color: var(--text-secondary);
+}
+
+.search-icon {
+    color: var(--text-secondary);
+    padding: 0 10px;
+    transition: color 0.3s ease;
+}
+
+.search-box:focus-within .search-icon {
     color: var(--primary);
 }
 
 .voice-search {
-    position: absolute;
-    right: 20px;
-    top: 50%;
-    transform: translateY(-50%);
-    color: var(--text-secondary);
-    cursor: pointer;
-    transition: color 0.3s ease;
-    will-change: color;
     background: none;
     border: none;
-    padding: 8px;
+    color: var(--text-secondary);
+    cursor: pointer;
+    padding: 8px 12px;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
+    transition: all 0.3s ease;
+    margin-left: 5px;
 }
 
 .voice-search:hover {
+    color: var(--primary);
     background: rgba(255, 255, 255, 0.1);
 }
 
@@ -390,6 +389,15 @@ h1 {
     color: var(--accent);
     background: rgba(255, 101, 132, 0.2);
     animation: voicePulse 1s ease-in-out infinite;
+}
+
+@keyframes voicePulse {
+    0%, 100% { 
+        transform: scale(1); 
+    }
+    50% { 
+        transform: scale(1.1); 
+    }
 }
 
 /* ==================== OPTIMIZED LINK CARDS ==================== */

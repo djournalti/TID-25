@@ -412,11 +412,29 @@ function updateCounter(count) {
     }, 50);
 }
 
-// ==================== INITIALIZATION ====================
-document.addEventListener('DOMContentLoaded', () => {
+/// ==================== DEBUG INITIALIZATION ====================
+console.log("🚀 script.js STARTED loading");
+
+// Global debug function
+window.debugSearchBox = function() {
+    console.log("=== SEARCH BOX DEBUG ===");
+    const searchInput = document.getElementById('searchInput');
+    const voiceBtn = document.getElementById('voiceSearch');
+    
+    console.log("Search input exists:", !!searchInput);
+    console.log("Voice button exists:", !!voiceBtn);
+    console.log("searchAccounts function:", typeof searchAccounts);
+    console.log("startVoiceSearch function:", typeof startVoiceSearch);
+};
+
+// ==================== FIXED INITIALIZATION ====================
+document.addEventListener('DOMContentLoaded', function() {
+    console.log("✅ DOM Content Loaded - Starting initialization...");
+    
     // Load saved theme
     const savedTheme = localStorage.getItem('theme') || 'dark';
     document.body.setAttribute('data-theme', savedTheme);
+    console.log("🎨 Theme loaded:", savedTheme);
 
     // Load click counts
     const savedClicks = localStorage.getItem('instagramClicks');
@@ -426,9 +444,60 @@ document.addEventListener('DOMContentLoaded', () => {
             const savedAccount = clickData.find(acc => acc.username === account.username);
             if (savedAccount) account.clicks = savedAccount.clicks;
         });
+        console.log("📊 Click counts loaded");
+    }
+
+    // Test elements before adding listeners
+    const searchInput = document.getElementById('searchInput');
+    const voiceBtn = document.getElementById('voiceSearch');
+    
+    console.log("🔍 Elements found:");
+    console.log("- searchInput:", searchInput);
+    console.log("- voiceBtn:", voiceBtn);
+
+    // ADD EVENT LISTENERS WITH ERROR HANDLING
+    try {
+        // Search input
+        if (searchInput) {
+            searchInput.addEventListener('input', function(e) {
+                console.log("🔍 Search input:", e.target.value);
+                searchAccounts();
+            });
+            console.log("✅ Search input listener added");
+        } else {
+            console.log("❌ Search input not found for listener");
+        }
+
+        // Voice search button
+        if (voiceBtn) {
+            voiceBtn.addEventListener('click', function(e) {
+                console.log("🎤 Voice button clicked");
+                startVoiceSearch();
+            });
+            console.log("✅ Voice button listener added");
+        } else {
+            console.log("❌ Voice button not found for listener");
+        }
+
+        // Theme toggle
+        document.getElementById('themeToggle').addEventListener('click', toggleTheme);
+        console.log("✅ Theme toggle listener added");
+
+        // Color randomizer
+        document.getElementById('colorRandomizer').addEventListener('click', randomizeColors);
+        console.log("✅ Color randomizer listener added");
+
+        // Music controls
+        document.getElementById('musicToggle').addEventListener('click', toggleMusic);
+        document.getElementById('playPause').addEventListener('click', toggleMusic);
+        console.log("✅ Music listeners added");
+
+    } catch (error) {
+        console.log("❌ Error adding event listeners:", error);
     }
 
     // Initialize features
+    console.log("🔄 Initializing features...");
     createLinkCards(instagramAccounts);
     createGallery();
     getWeather();
@@ -436,14 +505,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Typing animation
     typeWriter('Djournal.ti LinkHub', document.getElementById('typingText'));
-
-    // Event listeners
-    document.getElementById('searchInput').addEventListener('input', searchAccounts);
-    document.getElementById('voiceSearch').addEventListener('click', startVoiceSearch);
-    document.getElementById('themeToggle').addEventListener('click', toggleTheme);
-    document.getElementById('colorRandomizer').addEventListener('click', randomizeColors);
-    document.getElementById('musicToggle').addEventListener('click', toggleMusic);
-    document.getElementById('playPause').addEventListener('click', toggleMusic);
+    console.log("✅ Typing animation started");
 
     // Modal events
     document.getElementById('closeModal').addEventListener('click', closeModal);
@@ -461,6 +523,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // AI Chat placeholder
     document.getElementById('chatToggle').addEventListener('click', () => {
-        alert('🤖 AI Chatbot coming soon! Fitur ini akan membantu menjawab pertanyaan tentang Djournal.ti');
+        alert('🤖 AI Chatbot coming soon!');
     });
+
+    console.log("🎉 All initialization complete!");
+    
+    // Final debug check
+    setTimeout(() => {
+        console.log("=== FINAL DEBUG CHECK ===");
+        debugSearchBox();
+    }, 1000);
 });

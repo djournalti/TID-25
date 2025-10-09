@@ -140,41 +140,62 @@ function toggleMusic() {
     }
 }
 
-// Voice Search
+// Voice Search - Fixed Version
 function startVoiceSearch() {
     const voiceSearch = document.getElementById('voiceSearch');
-    if (!('webkitSpeechRecognition' in window)) {
-        alert('Browser tidak mendukung voice search');
+    
+    // Check browser support
+    if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
+        alert('Browser tidak mendukung voice search. Gunakan Chrome atau Edge.');
         return;
     }
 
-    const recognition = new webkitSpeechRecognition();
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    const recognition = new SpeechRecognition();
+    
     recognition.continuous = false;
     recognition.interimResults = false;
-    recognition.lang = 'id-ID'; // Set language to Indonesian
+    recognition.lang = 'id-ID';
 
     recognition.onstart = function() {
+        console.log("🎤 Voice recognition started");
         voiceSearch.classList.add('listening');
         voiceSearch.innerHTML = '<i class="fas fa-circle"></i>';
+        voiceSearch.style.color = 'var(--accent)';
     };
 
     recognition.onresult = function(event) {
         const transcript = event.results[0][0].transcript;
+        console.log("🗣️ Voice result:", transcript);
+        
         document.getElementById('searchInput').value = transcript;
         searchAccounts();
+        
+        // Reset button
         voiceSearch.classList.remove('listening');
         voiceSearch.innerHTML = '<i class="fas fa-microphone"></i>';
+        voiceSearch.style.color = '';
     };
 
-    recognition.onerror = function() {
+    recognition.onerror = function(event) {
+        console.log("❌ Voice recognition error:", event.error);
+        
         voiceSearch.classList.remove('listening');
         voiceSearch.innerHTML = '<i class="fas fa-microphone"></i>';
-        alert('Error dalam voice recognition. Coba lagi.');
+        voiceSearch.style.color = '';
+        
+        if (event.error === 'not-allowed') {
+            alert('Microphone access denied. Please allow microphone permission.');
+        } else {
+            alert('Voice recognition error: ' + event.error);
+        }
     };
 
     recognition.onend = function() {
+        console.log("🎤 Voice recognition ended");
         voiceSearch.classList.remove('listening');
         voiceSearch.innerHTML = '<i class="fas fa-microphone"></i>';
+        voiceSearch.style.color = '';
     };
 
     recognition.start();

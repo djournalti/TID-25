@@ -320,15 +320,18 @@ h1 {
     font-size: 1.1rem;
 }
 
+./* ==================== FIXED SEARCH BOX ==================== */
 .search-box {
     max-width: 500px;
     margin: 0 auto;
     position: relative;
+    display: flex;
+    align-items: center;
 }
 
 .search-box input {
     width: 100%;
-    padding: 15px 50px 15px 20px;
+    padding: 15px 100px 15px 20px; /* More right padding for buttons */
     background: rgba(255, 255, 255, 0.1);
     border: 1px solid var(--card-border);
     border-radius: 50px;
@@ -339,6 +342,7 @@ h1 {
                border-color 0.3s ease,
                box-shadow 0.3s ease;
     will-change: background-color, border-color;
+    flex: 1;
 }
 
 .search-box input:focus {
@@ -347,19 +351,44 @@ h1 {
     box-shadow: 0 0 0 3px rgba(108, 99, 255, 0.3);
 }
 
+.search-icon {
+    position: absolute;
+    right: 60px; /* Position between input and voice button */
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-secondary);
+    transition: var(--transition);
+}
+
+.search-box input:focus + .search-icon {
+    color: var(--primary);
+}
+
 .voice-search {
     position: absolute;
-    right: 50px;
+    right: 20px;
     top: 50%;
     transform: translateY(-50%);
     color: var(--text-secondary);
     cursor: pointer;
     transition: color 0.3s ease;
     will-change: color;
+    background: none;
+    border: none;
+    padding: 8px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.voice-search:hover {
+    background: rgba(255, 255, 255, 0.1);
 }
 
 .voice-search.listening {
     color: var(--accent);
+    background: rgba(255, 101, 132, 0.2);
     animation: voicePulse 1s ease-in-out infinite;
 }
 

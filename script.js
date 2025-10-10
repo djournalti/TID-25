@@ -208,15 +208,6 @@ function copyUsername(username) {
     });
 }
 
-// Track Clicks
-function trackClick(username) {
-    const account = instagramAccounts.find(acc => acc.username === username);
-    if (account) {
-        account.clicks++;
-        updateClickCounts();
-        localStorage.setItem('instagramClicks', JSON.stringify(instagramAccounts));
-    }
-}
 
 // Share Functions
 function shareOnWhatsApp() {
@@ -337,7 +328,6 @@ function createLinkCards(accounts) {
         card.target = "_blank";
         card.className = 'link-card';
         card.style.animationDelay = `${index * 0.1}s`;
-        card.onclick = () => trackClick(account.username);
         
         card.innerHTML = `
             <div class="instagram-icon">
@@ -347,10 +337,10 @@ function createLinkCards(accounts) {
                 <div class="username">@${account.username}</div>
                 <div class="link-desc">${account.description}</div>
             </div>
+            <div class="category-badge">${account.category}</div>
             <button class="copy-btn" onclick="event.stopPropagation(); copyUsername('${account.username}')">
                 <i class="fas fa-copy"></i>
             </button>
-            <div class="click-count">${account.clicks > 0 ? account.clicks + ' klik' : ''}</div>
         `;
         
         container.appendChild(card);
@@ -363,6 +353,7 @@ function createLinkCards(accounts) {
     
     updateCounter(accounts.length);
 }
+        
 
 function createGallery() {
     const container = document.getElementById('galleryContainer');
@@ -397,20 +388,7 @@ function searchAccounts() {
     createLinkCards(filteredAccounts);
 }
 
-function updateCounter(count) {
-    const counterElement = document.getElementById('counterNumber');
-    let currentCount = 0;
-    const increment = Math.ceil(count / 20);
-    
-    const timer = setInterval(() => {
-        currentCount += increment;
-        if (currentCount >= count) {
-            currentCount = count;
-            clearInterval(timer);
-        }
-        counterElement.textContent = currentCount;
-    }, 50);
-}
+
 
 /// ==================== DEBUG INITIALIZATION ====================
 console.log("🚀 script.js STARTED loading");
@@ -435,17 +413,6 @@ document.addEventListener('DOMContentLoaded', function() {
     const savedTheme = localStorage.getItem('theme') || 'dark';
     document.body.setAttribute('data-theme', savedTheme);
     console.log("🎨 Theme loaded:", savedTheme);
-
-    // Load click counts
-    const savedClicks = localStorage.getItem('instagramClicks');
-    if (savedClicks) {
-        const clickData = JSON.parse(savedClicks);
-        instagramAccounts.forEach(account => {
-            const savedAccount = clickData.find(acc => acc.username === account.username);
-            if (savedAccount) account.clicks = savedAccount.clicks;
-        });
-        console.log("📊 Click counts loaded");
-    }
 
     // Test elements before adding listeners
     const searchInput = document.getElementById('searchInput');

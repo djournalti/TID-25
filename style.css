@@ -967,3 +967,38 @@ footer {
         transform: scale3d(1.03, 1.03, 1);
     }
   }
+/* ==================== CATEGORY BADGE STYLES ==================== */
+.category-badge {
+    position: absolute;
+    top: 12px;
+    right: 45px; /* Space for copy button */
+    background: linear-gradient(45deg, var(--primary), var(--accent));
+    color: white;
+    font-size: 0.65rem;
+    padding: 3px 8px;
+    border-radius: 8px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+    white-space: nowrap;
+    max-width: 80px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+}
+
+.link-card:hover .category-badge {
+    transform: scale(1.05);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+/* Responsive category badge */
+@media (max-width: 480px) {
+    .category-badge {
+        font-size: 0.6rem;
+        padding: 2px 6px;
+        right: 40px;
+        max-width: 70px;
+    }
+    }

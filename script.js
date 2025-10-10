@@ -383,7 +383,8 @@ function searchAccounts() {
     const searchTerm = document.getElementById('searchInput').value.toLowerCase();
     const filteredAccounts = instagramAccounts.filter(account => 
         account.username.toLowerCase().includes(searchTerm) || 
-        account.description.toLowerCase().includes(searchTerm)
+        account.description.toLowerCase().includes(searchTerm) ||
+        account.category.toLowerCase().includes(searchTerm) // TAMBAH INI
     );
     createLinkCards(filteredAccounts);
 }

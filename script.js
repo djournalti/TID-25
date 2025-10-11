@@ -12,7 +12,7 @@ const instagramAccounts = [
     { username: "_firndaa", description: "Firanda", category: "Community" },
     { username: "maelatulw", description: "Maela", category: "Fashion" },
     { username: "nation.fajar", description: "Fajar", category: "Inspiration" },
-    { username: "rhmiinblaa_", description: "Rahmi", description: "Nature" },
+    { username: "rhmiinblaa_", description: "Rahmi", category: "Nature" },
     { username: "fadilsdhmandi_", description: "Irsad", category: "Business" },
     { username: "rifza_mhda", description: "Rifqi", category: "Education" },
     { username: "ilham_suf07", description: "Ilham", category: "Sports" },
@@ -208,7 +208,6 @@ function copyUsername(username) {
     });
 }
 
-
 // Share Functions
 function shareOnWhatsApp() {
     const url = encodeURIComponent(window.location.href);
@@ -297,25 +296,99 @@ function typeWriter(text, element, speed = 100) {
     type();
 }
 
-// Helper Functions
-function updateClickCounts() {
-    document.querySelectorAll('.link-card').forEach(card => {
-        const username = card.querySelector('.username').textContent.replace('@', '');
-        const account = instagramAccounts.find(acc => acc.username === username);
-        let countElement = card.querySelector('.click-count');
-        
-        if (!countElement) {
-            countElement = document.createElement('div');
-            countElement.className = 'click-count';
-            card.appendChild(countElement);
-        }
-        
-        if (account && account.clicks > 0) {
-            countElement.textContent = `${account.clicks} klik`;
-        } else {
-            countElement.textContent = '';
+// 3D Animation Toggle
+function toggle3DAnimations() {
+    document.body.classList.toggle('no-3d');
+    const is3DEnabled = !document.body.classList.contains('no-3d');
+    localStorage.setItem('3dEnabled', is3DEnabled);
+    
+    // GSAP animations for toggle feedback
+    const toggleBtn = document.getElementById('toggle3D');
+    gsap.to(toggleBtn, {
+        scale: 1.2,
+        duration: 0.3,
+        yoyo: true,
+        repeat: 1
+    });
+}
+
+// GSAP Animations
+function initGSAPAnimations() {
+    // Header animation
+    gsap.from('header', {
+        duration: 1,
+        y: -50,
+        opacity: 0,
+        ease: "power3.out"
+    });
+
+    // Link cards stagger animation
+    gsap.from('.link-card', {
+        duration: 0.8,
+        y: 30,
+        opacity: 0,
+        stagger: 0.1,
+        ease: "power2.out",
+        scrollTrigger: {
+            trigger: '.links-container',
+            start: "top 80%",
+            toggleActions: "play none none reverse"
         }
     });
+
+    // Gallery items animation
+    gsap.from('.gallery-item', {
+        duration: 0.6,
+        scale: 0.8,
+        opacity: 0,
+        stagger: 0.05,
+        ease: "back.out(1.7)",
+        scrollTrigger: {
+            trigger: '.gallery',
+            start: "top 85%",
+            toggleActions: "play none none reverse"
+        }
+    });
+
+    // Section titles animation
+    gsap.from('.section-title', {
+        duration: 0.8,
+        x: -30,
+        opacity: 0,
+        stagger: 0.2,
+        scrollTrigger: {
+            trigger: '.section-title',
+            start: "top 90%",
+            toggleActions: "play none none reverse"
+        }
+    });
+
+    // Floating continuous animations
+    gsap.to('.floating-shape', {
+        y: "+=20",
+        rotation: "+=5",
+        duration: 3,
+        repeat: -1,
+        yoyo: true,
+        ease: "sine.inOut"
+    });
+
+    // 3D elements continuous rotation
+    if (!document.body.classList.contains('no-3d')) {
+        gsap.to('.three-d-element', {
+            rotationY: 360,
+            rotationX: 360,
+            duration: 20,
+            repeat: -1,
+            ease: "none"
+        });
+    }
+}
+
+// Helper Functions
+function updateCounter(count) {
+    document.getElementById('counterNumber').textContent = count;
+    document.getElementById('accountCounter').textContent = `Memuat ${count} akun`;
 }
 
 function createLinkCards(accounts) {
@@ -345,15 +418,18 @@ function createLinkCards(accounts) {
         
         container.appendChild(card);
         
-        setTimeout(() => {
-            card.style.opacity = '1';
-            card.style.transform = 'translateY(0)';
-        }, 100 + (index * 100));
+        // GSAP animation for individual cards
+        gsap.to(card, {
+            opacity: 1,
+            y: 0,
+            duration: 0.6,
+            delay: index * 0.1,
+            ease: "power2.out"
+        });
     });
     
     updateCounter(accounts.length);
 }
-        
 
 function createGallery() {
     const container = document.getElementById('galleryContainer');
@@ -372,10 +448,14 @@ function createGallery() {
         
         container.appendChild(galleryItem);
         
-        setTimeout(() => {
-            galleryItem.style.opacity = '1';
-            galleryItem.style.transform = 'scale(1)';
-        }, 500 + (index * 100));
+        // GSAP animation for gallery items
+        gsap.to(galleryItem, {
+            opacity: 1,
+            scale: 1,
+            duration: 0.5,
+            delay: index * 0.1,
+            ease: "back.out(1.7)"
+        });
     });
 }
 
@@ -384,14 +464,12 @@ function searchAccounts() {
     const filteredAccounts = instagramAccounts.filter(account => 
         account.username.toLowerCase().includes(searchTerm) || 
         account.description.toLowerCase().includes(searchTerm) ||
-        account.category.toLowerCase().includes(searchTerm) // TAMBAH INI
+        account.category.toLowerCase().includes(searchTerm)
     );
     createLinkCards(filteredAccounts);
 }
 
-
-
-/// ==================== DEBUG INITIALIZATION ====================
+// ==================== DEBUG INITIALIZATION ====================
 console.log("🚀 script.js STARTED loading");
 
 // Global debug function
@@ -410,10 +488,17 @@ window.debugSearchBox = function() {
 document.addEventListener('DOMContentLoaded', function() {
     console.log("✅ DOM Content Loaded - Starting initialization...");
     
-    // Load saved theme
+    // Load saved theme and 3D settings
     const savedTheme = localStorage.getItem('theme') || 'dark';
+    const is3DEnabled = localStorage.getItem('3dEnabled') !== 'false';
     document.body.setAttribute('data-theme', savedTheme);
+    
+    if (!is3DEnabled) {
+        document.body.classList.add('no-3d');
+    }
+    
     console.log("🎨 Theme loaded:", savedTheme);
+    console.log("🎮 3D Animations:", is3DEnabled ? "Enabled" : "Disabled");
 
     // Test elements before adding listeners
     const searchInput = document.getElementById('searchInput');
@@ -460,6 +545,10 @@ document.addEventListener('DOMContentLoaded', function() {
         document.getElementById('playPause').addEventListener('click', toggleMusic);
         console.log("✅ Music listeners added");
 
+        // 3D Toggle
+        document.getElementById('toggle3D').addEventListener('click', toggle3DAnimations);
+        console.log("✅ 3D toggle listener added");
+
     } catch (error) {
         console.log("❌ Error adding event listeners:", error);
     }
@@ -470,6 +559,10 @@ document.addEventListener('DOMContentLoaded', function() {
     createGallery();
     getWeather();
     startGame();
+
+    // Initialize GSAP animations
+    console.log("🎬 Initializing GSAP animations...");
+    initGSAPAnimations();
 
     // Typing animation
     typeWriter('Djournal.ti LinkHub', document.getElementById('typingText'));

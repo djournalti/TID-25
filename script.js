@@ -1,3 +1,349 @@
+// ==================== LOADING & FADE ANIMATIONS ====================
+function showLoadingScreen() {
+    const loadingScreen = document.getElementById('loadingScreen');
+    const mainContainer = document.getElementById('mainContainer');
+    
+    // Pastikan loading screen visible dan main container hidden
+    loadingScreen.style.display = 'flex';
+    mainContainer.style.opacity = '0';
+    mainContainer.style.visibility = 'hidden';
+}
+
+function hideLoadingScreen() {
+    const loadingScreen = document.getElementById('loadingScreen');
+    const mainContainer = document.getElementById('mainContainer');
+    
+    // Animasi fade out loading screen
+    loadingScreen.classList.add('fade-out');
+    
+    setTimeout(() => {
+        // Sembunyikan loading screen
+        loadingScreen.style.display = 'none';
+        
+        // Tampilkan main container dengan fade in
+        mainContainer.style.visibility = 'visible';
+        mainContainer.classList.add('fade-in');
+        
+        // Start GSAP animations setelah konten muncul
+        setTimeout(() => {
+            initGSAPAnimations();
+        }, 300);
+        
+    }, 800); // Match dengan duration transition di CSS
+}
+
+function initializePageTransition() {
+    // Simulate loading process
+    showLoadingScreen();
+    
+    // Simulate content loading
+    setTimeout(() => {
+        // Initialize all content
+        createLinkCards(instagramAccounts);
+        createGallery();
+        getWeather();
+        startGame();
+        typeWriter('Djournal.ti LinkHub', document.getElementById('typingText'));
+        
+        // Hide loading screen after everything is ready
+        hideLoadingScreen();
+    }, 2000); // Adjust timing based on your content load time
+}
+
+function fadeInElements() {
+    // Fade in elements with staggered delay
+    const elements = document.querySelectorAll('.fade-in-element');
+    elements.forEach((element, index) => {
+        setTimeout(() => {
+            element.classList.add('visible');
+        }, index * 100);
+    });
+}
+
+function fadeInCards() {
+    const cards = document.querySelectorAll('.link-card.fade-in-delay');
+    cards.forEach((card, index) => {
+        setTimeout(() => {
+            card.style.opacity = '1';
+            card.style.transform = 'translateY(0)';
+        }, index * 80);
+    });
+}
+
+function fadeInGallery() {
+    const items = document.querySelectorAll('.gallery-item.fade-in-delay');
+    items.forEach((item, index) => {
+        setTimeout(() => {
+            item.style.opacity = '1';
+            item.style.transform = 'scale(1) translateY(0)';
+        }, index * 60);
+    });
+}
+
+// Enhanced GSAP Animations dengan fade effects
+function initGSAPAnimations() {
+    // Header animation dengan fade
+    gsap.from('header', {
+        duration: 1.2,
+        y: -50,
+        opacity: 0,
+        ease: "power3.out",
+        delay: 0.2
+    });
+
+    // Section titles dengan fade bertahap
+    gsap.from('.section-title', {
+        duration: 1,
+        y: -30,
+        opacity: 0,
+        stagger: 0.3,
+        ease: "power2.out",
+        scrollTrigger: {
+            trigger: '.section-title',
+            start: "top 90%",
+            toggleActions: "play none none reverse"
+        }
+    });
+
+    // Link cards dengan stagger dan fade
+    gsap.from('.link-card', {
+        duration: 0.8,
+        y: 30,
+        opacity: 0,
+        stagger: 0.1,
+        ease: "power2.out",
+        scrollTrigger: {
+            trigger: '.links-container',
+            start: "top 80%",
+            toggleActions: "play none none reverse"
+        }
+    });
+
+    // Gallery items dengan scale dan fade
+    gsap.from('.gallery-item', {
+        duration: 0.6,
+        scale: 0.8,
+        y: 20,
+        opacity: 0,
+        stagger: 0.05,
+        ease: "back.out(1.7)",
+        scrollTrigger: {
+            trigger: '.gallery',
+            start: "top 85%",
+            toggleActions: "play none none reverse"
+        }
+    });
+
+    // Weather widget dan share section
+    gsap.from('.weather-widget, .share-section, .mini-game', {
+        duration: 0.8,
+        y: 20,
+        opacity: 0,
+        stagger: 0.2,
+        ease: "power2.out",
+        scrollTrigger: {
+            trigger: '.weather-widget',
+            start: "top 90%",
+            toggleActions: "play none none reverse"
+        }
+    });
+
+    // Footer animation
+    gsap.from('footer', {
+        duration: 1,
+        y: 30,
+        opacity: 0,
+        ease: "power2.out",
+        scrollTrigger: {
+            trigger: 'footer',
+            start: "top 95%",
+            toggleActions: "play none none reverse"
+        }
+    });
+
+    // Continuous background animations
+    gsap.to('.floating-shape', {
+        y: "+=20",
+        rotation: "+=5",
+        duration: 3,
+        repeat: -1,
+        yoyo: true,
+        ease: "sine.inOut"
+    });
+
+    // 3D elements continuous rotation
+    if (!document.body.classList.contains('no-3d')) {
+        gsap.to('.three-d-element', {
+            rotationY: 360,
+            rotationX: 360,
+            duration: 20,
+            repeat: -1,
+            ease: "none"
+        });
+    }
+}
+
+// Page exit animation (untuk future navigation)
+function pageExitAnimation(callback) {
+    const mainContainer = document.getElementById('mainContainer');
+    
+    // Fade out main content
+    mainContainer.classList.remove('fade-in');
+    mainContainer.classList.add('fade-out');
+    
+    setTimeout(() => {
+        if (callback) callback();
+    }, 600);
+}
+
+// ==================== MODIFIED HELPER FUNCTIONS ====================
+function createLinkCards(accounts) {
+    const container = document.getElementById('linksContainer');
+    container.innerHTML = '';
+    
+    accounts.forEach((account, index) => {
+        const card = document.createElement('a');
+        card.href = `https://instagram.com/${account.username}`;
+        card.target = "_blank";
+        card.className = 'link-card fade-in-delay';
+        
+        card.innerHTML = `
+            <div class="instagram-icon">
+                <i class="fab fa-instagram"></i>
+            </div>
+            <div class="link-text">
+                <div class="username">@${account.username}</div>
+                <div class="link-desc">${account.description}</div>
+            </div>
+            <div class="category-badge">${account.category}</div>
+            <button class="copy-btn" onclick="event.stopPropagation(); copyUsername('${account.username}')">
+                <i class="fas fa-copy"></i>
+            </button>
+        `;
+        
+        container.appendChild(card);
+    });
+    
+    updateCounter(accounts.length);
+    
+    // Trigger fade in animation untuk cards
+    setTimeout(() => {
+        fadeInCards();
+    }, 100);
+}
+
+function createGallery() {
+    const container = document.getElementById('galleryContainer');
+    container.innerHTML = '';
+    
+    galleryImages.forEach((image, index) => {
+        const galleryItem = document.createElement('div');
+        galleryItem.className = 'gallery-item fade-in-delay';
+        galleryItem.onclick = () => openModal(image);
+        
+        galleryItem.innerHTML = `
+            <img src="${image}" alt="Photo from Djournal.ti" class="gallery-img">
+            <div class="gallery-overlay">Klik untuk memperbesar</div>
+        `;
+        
+        container.appendChild(galleryItem);
+    });
+    
+    // Trigger fade in animation untuk gallery
+    setTimeout(() => {
+        fadeInGallery();
+    }, 150);
+}
+
+// ==================== MODIFIED INITIALIZATION ====================
+document.addEventListener('DOMContentLoaded', function() {
+    console.log("🚀 DOM Content Loaded - Starting enhanced initialization...");
+    
+    // Load saved theme and 3D settings
+    const savedTheme = localStorage.getItem('theme') || 'dark';
+    const is3DEnabled = localStorage.getItem('3dEnabled') !== 'false';
+    document.body.setAttribute('data-theme', savedTheme);
+    
+    if (!is3DEnabled) {
+        document.body.classList.add('no-3d');
+    }
+    
+    console.log("🎨 Theme loaded:", savedTheme);
+    console.log("🎮 3D Animations:", is3DEnabled ? "Enabled" : "Disabled");
+
+    // Initialize event listeners
+    initializeEventListeners();
+    
+    // Start page transition dengan loading screen
+    initializePageTransition();
+});
+
+function initializeEventListeners() {
+    try {
+        const searchInput = document.getElementById('searchInput');
+        const voiceBtn = document.getElementById('voiceSearch');
+        
+        // Search input
+        if (searchInput) {
+            searchInput.addEventListener('input', function(e) {
+                console.log("🔍 Search input:", e.target.value);
+                searchAccounts();
+            });
+        }
+
+        // Voice search button
+        if (voiceBtn) {
+            voiceBtn.addEventListener('click', startVoiceSearch);
+        }
+
+        // Control buttons
+        document.getElementById('themeToggle').addEventListener('click', toggleTheme);
+        document.getElementById('colorRandomizer').addEventListener('click', randomizeColors);
+        document.getElementById('musicToggle').addEventListener('click', toggleMusic);
+        document.getElementById('playPause').addEventListener('click', toggleMusic);
+        document.getElementById('toggle3D').addEventListener('click', toggle3DAnimations);
+
+        // Modal events
+        document.getElementById('closeModal').addEventListener('click', closeModal);
+        document.getElementById('closeQrModal').addEventListener('click', closeModal);
+        document.querySelectorAll('.modal').forEach(modal => {
+            modal.addEventListener('click', function(e) {
+                if (e.target === this) closeModal();
+            });
+        });
+
+        // ESC key to close modals
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') closeModal();
+        });
+
+        // AI Chat placeholder
+        document.getElementById('chatToggle').addEventListener('click', () => {
+            alert('🤖 AI Chatbot coming soon!');
+        });
+
+        console.log("✅ All event listeners initialized");
+
+    } catch (error) {
+        console.log("❌ Error adding event listeners:", error);
+    }
+}
+
+// ==================== EXISTING FUNCTIONS (tetap sama) ====================
+const instagramAccounts = [
+    // ... data instagramAccounts tetap sama ...
+];
+
+const galleryImages = [
+    // ... data galleryImages tetap sama ...
+];
+
+// ... semua fungsi lainnya tetap sama seperti sebelumnya ...
+// (openModal, openVideoModal, closeModal, toggleTheme, randomizeColors, 
+//  toggleMusic, startVoiceSearch, copyUsername, shareOnWhatsApp, 
+//  shareOnTelegram, generateQRCode, copyLink, getWeather, startGame, 
+//  checkAnswer, typeWriter, toggle3DAnimations, updateCounter, 
+//  searchAccounts, dll)
 // ==================== DATA LENGKAP INSTAGRAM DENGAN KATEGORI ====================
 const instagramAccounts = [
     { username: "eevaaue_", description: "Eva", category: "Lifestyle" },

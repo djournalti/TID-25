@@ -55,6 +55,7 @@ body {
     overflow: hidden;
     transform: translateZ(0);
     will-change: transform;
+    perspective: 1000px;
 }
 
 .floating-shape {
@@ -140,6 +141,32 @@ body {
     transform: translate3d(0, 0, 0);
 }
 
+/* 3D Elements */
+.three-d-element {
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    background: linear-gradient(45deg, var(--primary), var(--accent));
+    border-radius: 20px;
+    opacity: 0.1;
+    animation: rotate3D 20s infinite linear;
+    transform-style: preserve-3d;
+    will-change: transform;
+}
+
+#threeD1 {
+    top: 20%;
+    left: 10%;
+    animation-delay: 0s;
+}
+
+#threeD2 {
+    top: 70%;
+    left: 80%;
+    animation-delay: 10s;
+    background: linear-gradient(45deg, var(--accent), var(--secondary));
+}
+
 @keyframes floatShape {
     0%, 100% { 
         transform: translate3d(0, 0, 0) rotate(0deg); 
@@ -179,6 +206,24 @@ body {
     }
     100% { 
         transform: translate3d(50px, 50px, 0); 
+    }
+}
+
+@keyframes rotate3D {
+    0% { 
+        transform: rotate3d(1, 1, 1, 0deg) translateZ(0); 
+    }
+    25% { 
+        transform: rotate3d(1, 0, 0, 90deg) translateZ(50px); 
+    }
+    50% { 
+        transform: rotate3d(0, 1, 0, 180deg) translateZ(0); 
+    }
+    75% { 
+        transform: rotate3d(0, 0, 1, 270deg) translateZ(-50px); 
+    }
+    100% { 
+        transform: rotate3d(1, 1, 1, 360deg) translateZ(0); 
     }
 }
 
@@ -250,6 +295,8 @@ header {
 .profile-img-container {
     position: relative;
     cursor: pointer;
+    transform-style: preserve-3d;
+    perspective: 1000px;
 }
 
 .profile-img {
@@ -266,7 +313,7 @@ header {
 }
 
 .profile-img:hover {
-    transform: scale(1.05) translateZ(0);
+    transform: scale(1.05) rotateY(10deg) translateZ(0);
     border-color: var(--accent);
 }
 
@@ -320,7 +367,7 @@ h1 {
     font-size: 1.1rem;
 }
 
-/* ==================== FIXED SEARCH BOX - MENYATU ==================== */
+/* ==================== FIXED SEARCH BOX ==================== */
 .search-box {
     max-width: 500px;
     margin: 0 auto;
@@ -430,6 +477,7 @@ h1 {
     animation: cardEntrance 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
     opacity: 0;
     transform: translate3d(0, 30px, 0);
+    transform-style: preserve-3d;
 }
 
 .link-card::before {
@@ -452,7 +500,7 @@ h1 {
 }
 
 .link-card:hover {
-    transform: translate3d(0, -10px, 0);
+    transform: translate3d(0, -10px, 0) rotateX(5deg);
     border-color: var(--primary);
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
 }
@@ -508,6 +556,32 @@ h1 {
     will-change: transform;
 }
 
+/* ==================== CATEGORY BADGE STYLES ==================== */
+.category-badge {
+    position: absolute;
+    top: 12px;
+    right: 45px;
+    background: linear-gradient(45deg, var(--primary), var(--accent));
+    color: white;
+    font-size: 0.65rem;
+    padding: 3px 8px;
+    border-radius: 8px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+    white-space: nowrap;
+    max-width: 80px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+}
+
+.link-card:hover .category-badge {
+    transform: scale(1.05);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
 /* ==================== OPTIMIZED GALLERY ==================== */
 .gallery {
     display: grid;
@@ -529,10 +603,11 @@ h1 {
     animation: scaleIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
     opacity: 0;
     transform: scale3d(0.9, 0.9, 1);
+    transform-style: preserve-3d;
 }
 
 .gallery-item:hover {
-    transform: scale3d(1.05, 1.05, 1);
+    transform: scale3d(1.05, 1.05, 1) rotateY(5deg);
 }
 
 .gallery-img {
@@ -653,10 +728,11 @@ h1 {
                box-shadow 0.4s ease;
     will-change: transform, box-shadow;
     transform: translateZ(0);
+    transform-style: preserve-3d;
 }
 
 .video-wrapper:hover {
-    transform: scale3d(1.02, 1.02, 1);
+    transform: scale3d(1.02, 1.02, 1) rotateX(2deg);
     box-shadow: 0 25px 50px rgba(0, 0, 0, 0.4);
 }
 
@@ -703,15 +779,6 @@ h1 {
     }
     50% { 
         border-color: transparent; 
-    }
-}
-
-@keyframes voicePulse {
-    0%, 100% { 
-        transform: translateY(-50%) scale3d(1, 1, 1); 
-    }
-    50% { 
-        transform: translateY(-50%) scale3d(1.1, 1.1, 1); 
     }
 }
 
@@ -894,6 +961,22 @@ footer {
     color: var(--primary);
 }
 
+/* 3D Animation Toggle */
+body.no-3d .three-d-element,
+body.no-3d .profile-img-container,
+body.no-3d .link-card,
+body.no-3d .gallery-item,
+body.no-3d .video-wrapper {
+    transform-style: flat !important;
+    transform: none !important;
+}
+
+body.no-3d .link-card:hover,
+body.no-3d .gallery-item:hover,
+body.no-3d .video-wrapper:hover {
+    transform: translateY(-5px) !important;
+}
+
 /* ==================== RESPONSIVE OPTIMIZATIONS ==================== */
 @media (max-width: 768px) {
     .links-container {
@@ -937,6 +1020,13 @@ footer {
         margin: 10px auto;
         justify-content: center;
     }
+
+    .category-badge {
+        font-size: 0.6rem;
+        padding: 2px 6px;
+        right: 40px;
+        max-width: 70px;
+    }
 }
 
 @media (max-width: 480px) {
@@ -966,39 +1056,4 @@ footer {
     .gallery-item:hover {
         transform: scale3d(1.03, 1.03, 1);
     }
-  }
-/* ==================== CATEGORY BADGE STYLES ==================== */
-.category-badge {
-    position: absolute;
-    top: 12px;
-    right: 45px; /* Space for copy button */
-    background: linear-gradient(45deg, var(--primary), var(--accent));
-    color: white;
-    font-size: 0.65rem;
-    padding: 3px 8px;
-    border-radius: 8px;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.3px;
-    white-space: nowrap;
-    max-width: 80px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
-    transition: all 0.3s ease;
 }
-
-.link-card:hover .category-badge {
-    transform: scale(1.05);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-}
-
-/* Responsive category badge */
-@media (max-width: 480px) {
-    .category-badge {
-        font-size: 0.6rem;
-        padding: 2px 6px;
-        right: 40px;
-        max-width: 70px;
-    }
-    }
